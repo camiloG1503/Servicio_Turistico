@@ -6,7 +6,6 @@ export const getDestinos = async (req, res) => {
     const [destinos] = await db.query("SELECT * FROM destinos");
     res.json(destinos);
   } catch (error) {
-<<<<<<< HEAD
     console.error("Error en getDestinos:", error);
     res.status(500).json({ 
       error: "Error al obtener los destinos", 
@@ -77,7 +76,7 @@ export const createDestino = async (req, res) => {
 };
 
 // Actualizar un destino
-export const updateDestino = async (req, res) => {
+export const updateDestinos = async (req, res) => {
   try {
     const { id } = req.params;
     const { nombre, ubicacion, descripcion, imagen, precio } = req.body;
@@ -146,7 +145,7 @@ export const updateDestino = async (req, res) => {
 };
 
 // Eliminar un destino
-export const deleteDestino = async (req, res) => {
+export const deleteDestinos = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -174,14 +173,13 @@ export const deleteDestino = async (req, res) => {
       details: error.message,
       sqlMessage: error.sqlMessage 
     });
-=======
     res.status(500).json({ error: error.message });
   }
 };
 ////// modificar el controlador para que devuelva un destino por ID
 
 // Obtener destino por ID
-export const getDestinoById = async (req, res) => {
+export const getDestinosById = async (req, res) => {
   try {
     const [destino] = await db.query("SELECT * FROM destinos WHERE id = ?", [req.params.id]);
     if (destino.length === 0) return res.status(404).json({ error: "Destino no encontrado" });
@@ -192,7 +190,7 @@ export const getDestinoById = async (req, res) => {
 };
 
 // Crear un nuevo destino
-export const createDestino = async (req, res) => {
+export const createDestinos = async (req, res) => {
   try {
     const { nombre, ubicacion, descripcion, imagen, precio } = req.body;
     const [result] = await db.query(
@@ -228,6 +226,5 @@ export const deleteDestino = async (req, res) => {
     res.json({ message: "Destino eliminado correctamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
->>>>>>> d1be8c15362090f40ef7a9b44f2c6fbd7f52ca88
   }
 };
