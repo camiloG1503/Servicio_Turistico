@@ -1,15 +1,16 @@
 import express from "express";
-import {
-  getReservas,
+import { 
+  getReservas, 
   getReservaById,
-  createReserva,
-  updateReserva,
-  deleteReserva,
+  createReserva, 
+  updateReserva, 
+  deleteReserva 
 } from "../controllers/reservasController.js";
 
 const router = express.Router();
 
 router.get("/", getReservas);
+router.get("/:id", getReservaById);
 router.post("/", createReserva);
 router.put("/:id", updateReserva);
 router.delete("/:id", deleteReserva);
