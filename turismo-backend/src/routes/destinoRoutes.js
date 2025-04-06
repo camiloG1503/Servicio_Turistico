@@ -11,9 +11,7 @@ import {
 const router = express.Router();
 
 router.get("/", getDestinos);
-
 router.get("/:id", getDestinoById);
-
 router.get("/:id", getDestinoById); // Nueva ruta para obtener un destino por ID
 router.post("/", createDestino);
 router.put("/:id", updateDestino);

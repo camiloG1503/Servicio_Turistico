@@ -3,8 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import db from "./config/db.js";
 import destinoRoutes from "./src/routes/destinoRoutes.js";
-import usuariosRoutes from "./src/routes/usuariosRoutes.js";  // <- Asegúrate de importarlo
-import reservasRoutes from "./src/routes/reservasRoutes.js";  // <- Asegúrate de importarlo
+import usuariosRoutes from "./src/routes/usuariosRoutes.js";  
+import reservasRoutes from "./src/routes/reservasRoutes.js";
+import resenaRoutes from "./src/routes/resenaRoutes.js";
+import guiaRoutes from "./src/routes/guiaRoutes.js";
+import pagoRoutes from "./src/routes/pagoRoutes.js";
+import paqueteRoutes from "./src/routes/paqueteRoutes.js";
+
 
 dotenv.config();
 
@@ -22,8 +27,12 @@ db.connect((error) => {
 });
 
 app.use("/api/destinos", destinoRoutes);
-app.use("/api/usuarios", usuariosRoutes);  // <- Asegúrate de usarlo
-app.use("/api/reservas", reservasRoutes);  // <- Asegúrate de usarlo
+app.use("/api/usuarios", usuariosRoutes);  
+app.use("/api/reservas", reservasRoutes);
+app.use("/api/resenas", resenaRoutes);
+app.use("/api/guias", guiaRoutes);
+app.use("/api/pagos", pagoRoutes);
+app.use("/api/paquetes", paqueteRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
