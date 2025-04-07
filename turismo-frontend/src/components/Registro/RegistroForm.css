@@ -1,0 +1,19 @@
+.registro-form-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 40px 20px;
+}
+
+.registro-form {
+    max-width: 400px;
+    width: 100%;
+}
+
+.toggle-icon {
+    position: absolute;
+    top: 38px;
+    right: 10px;
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 1.2rem;
+}

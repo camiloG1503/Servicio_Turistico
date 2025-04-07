@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div>
-      <h1>Bienvenido a Turismo Colombia</h1>
-      <p>Explora los mejores destinos turísticos con nosotros.</p>
+      <h1>“Explora con nosotros”</h1>
+      <p>"Descubre experiencias únicas en los destinos más fascinantes. Desde playas paradisíacas hasta ciudades llenas de historia, diseñamos cada aventura para que vivas momentos inolvidables.”</p>
       <Link to="/destinos">Ver Destinos</Link>
     </div>
   );

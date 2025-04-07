@@ -1,0 +1,86 @@
+.footer {
+    background-color: #e6e6e6;
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.footer-subtitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #00b894;
+}
+
+.footer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-form input {
+    border: none;
+    border-bottom: 1px solid #000;
+    background: transparent;
+    padding: 6px 4px;
+    outline: none;
+    font-size: 14px;
+}
+
+.footer-form button {
+    background: none;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-start;
+    padding: 0;
+    border-bottom: 1px solid #000;
+}
+
+.footer-copy {
+    margin-top: auto;
+    font-size: 12px;
+    color: #777;
+    margin-top: 20px;
+}

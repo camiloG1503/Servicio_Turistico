@@ -1,0 +1,19 @@
+.benefits {
+    background-color: #fdf4ea;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.benefit-item {
+    font-size: 14px;
+    color: #444;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.benefit-icon {
+    font-size: 32px;
+    color: #a67c52;
+    margin-bottom: 10px;
+    display: block;
+}  
