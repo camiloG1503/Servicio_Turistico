@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DestinoCard from "../components/Destinos/DestinoCard";
 
 const Destinos = () => {
   const [destinos, setDestinos] = useState([]);
@@ -24,17 +25,17 @@ const Destinos = () => {
   }, []);
 
   if (loading) {
-    return <p>Cargando destinos...</p>;
+    return <p className="text-center mt-5">Cargando destinos...</p>;
   }
 
   return (
-    <div>
-      <h1>Destinos Turísticos</h1>
-      <ul>
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">Destinos Turísticos</h1>
+      <div className="row">
         {destinos.map((destino) => (
-          <li key={destino.id_destino}>{destino.nombre}</li>
+          <DestinoCard key={destino.id_destino} destino={destino} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

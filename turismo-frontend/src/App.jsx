@@ -7,8 +7,9 @@ import Reseñas from "./pages/Reseñas";
 import Contacto from "./pages/Contacto";
 import Informacion from "./pages/Informacion";
 import Registro from "./pages/Registro";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Header/Navbar";
 import Footer from "./components/Footer/Footer";
+import Beneficios from "./components/Informacion/Beneficios";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/informacion" element={<Informacion />} />
         <Route path="/registro" element={<Registro />} />
       </Routes>
+      <Beneficios />
       <Footer />
     </Router>
   );
