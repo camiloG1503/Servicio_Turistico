@@ -9,6 +9,7 @@ import resenaRoutes from "./src/routes/resenaRoutes.js";
 import guiaRoutes from "./src/routes/guiaRoutes.js";
 import pagoRoutes from "./src/routes/pagoRoutes.js";
 import paqueteRoutes from "./src/routes/paqueteRoutes.js";
+import authRoutes from "./src/routes/authRoutes.js";
 
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.use("/api/resenas", resenaRoutes);
 app.use("/api/guias", guiaRoutes);
 app.use("/api/pagos", pagoRoutes);
 app.use("/api/paquetes", paqueteRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

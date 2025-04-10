@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 export const getUsuarios = async (req, res) => {
   try {
     const [usuarios] = await db.query(
-      "SELECT id_usuario, nombre, email, rol FROM usuarios"
+      "SELECT id_usuario, nombre, email, password, rol FROM usuarios"
     );
     res.json(usuarios);
   } catch (error) {
@@ -26,7 +26,7 @@ export const getUsuarioById = async (req, res) => {
     }
 
     const [usuario] = await db.query(
-      "SELECT id_usuario, nombre, email, rol FROM usuarios WHERE id_usuario = ?", 
+      "SELECT id_usuario, nombre, email, password, rol FROM usuarios WHERE id_usuario = ?", 
       [id]
     );
 
@@ -168,7 +168,7 @@ export const updateUsuario = async (req, res) => {
 
     // Obtener usuario actualizado
     const [updatedUser] = await db.query(
-      "SELECT id_usuario, nombre, email, rol FROM usuarios WHERE id_usuario = ?",
+      "SELECT id_usuario, nombre, email, password, rol FROM usuarios WHERE id_usuario = ?",
       [id]
     );
 

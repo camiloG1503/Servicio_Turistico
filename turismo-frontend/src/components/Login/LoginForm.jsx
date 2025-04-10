@@ -23,12 +23,6 @@ const LoginForm = ({ onClose }) => {
         <button onClick={onClose} className="btn-close btn-sm"></button>
         </div>
         <form>
-        <div className="mb-2">
-            <input type="email" className="form-control" placeholder="Correo" />
-        </div>
-        <div className="mb-2">
-            <input type="password" className="form-control" placeholder="Contraseña" />
-        </div>
         <button type="submit" className="btn btn-primary btn-sm w-100">Iniciar sesión</button>
         <div className="mt-2 text-center">
             <Link to="/registro" onClick={onClose}>¿No tienes cuenta? Regístrate</Link>

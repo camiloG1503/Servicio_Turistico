@@ -4,7 +4,7 @@ class UsuarioModel {
   // Obtener todos los usuarios
   static async getAll() {
     try {
-      const [rows] = await db.query("SELECT id_usuario, nombre, email, rol FROM usuarios");
+      const [rows] = await db.query("SELECT id_usuario, nombre, email, password, rol FROM usuarios");
       return rows;
     } catch (error) {
       throw new Error("Error al obtener los usuarios: " + error.message);
@@ -14,7 +14,7 @@ class UsuarioModel {
   // Obtener un usuario por ID
   static async getById(id) {
     try {
-      const [rows] = await db.query("SELECT id_usuario, nombre, email, rol FROM usuarios WHERE id_usuario = ?", [id]);
+      const [rows] = await db.query("SELECT id_usuario, nombre, email, password, rol FROM usuarios WHERE id_usuario = ?", [id]);
       return rows[0]; // Devuelve solo el primer resultado
     } catch (error) {
       throw new Error("Error al obtener el usuario: " + error.message);
