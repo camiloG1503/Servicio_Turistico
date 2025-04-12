@@ -1,20 +1,20 @@
 import express from "express";
 
 import {
-  getDestinos,
-  getDestinoById,
-  createDestino,
-  updateDestino,
-  deleteDestino,
+    listarDestinos,
+    obtenerDestino,
+    crearDestino,
+    editarDestino,
+    borrarDestino,
 } from "../controllers/destinoController.js";
 
 const router = express.Router();
 
-router.get("/", getDestinos);
-router.get("/:id", getDestinoById);
-router.get("/:id", getDestinoById); // Nueva ruta para obtener un destino por ID
-router.post("/", createDestino);
-router.put("/:id", updateDestino);
-router.delete("/:id", deleteDestino);
+// Rutas para destinos
+router.get("/", listarDestinos); // Obtener todos los destinos
+router.get("/:id", obtenerDestino); // Obtener un destino por ID
+router.post("/", crearDestino); // Crear un nuevo destino
+router.put("/:id", editarDestino); // Editar un destino existente
+router.delete("/:id", borrarDestino); // Borrar un destino
 
 export default router;
