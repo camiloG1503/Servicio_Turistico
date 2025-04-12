@@ -1,38 +1,52 @@
 import db from "../config/db.js";
 
+class DestinoModel {
+  static async getAll() {
+    const [rows] = await db.query("SELECT * FROM destinos");
+    return rows;
+  }
 
-export const crearDestino = async ({ nombre, descripcion, precio, imagen }) => {
-    const [result] = await db.execute(
-      "INSERT INTO destinos (nombre, descripcion, precio, imagen) VALUES (?, ?, ?, ?)",
-      [nombre, descripcion, precio, imagen]
+  static async getById(id) {
+    const [rows] = await db.query("SELECT * FROM destinos WHERE id_destino = ?", [id]);
+    return rows[0];
+  }
+
+  static async create(destino) {
+    const [result] = await db.query(
+      `INSERT INTO destinos (nombre, ubicacion, descripcion, imagen, precio)
+       VALUES (?, ?, ?, ?, ?)`,
+      [
+        destino.nombre,
+        destino.ubicacion,
+        destino.descripcion,
+        destino.imagen || null,
+        destino.precio
+      ]
     );
     return result.insertId;
-};
+  }
 
-export const obtenerDestinos = async () => {
-    const [rows] = await db.execute("SELECT id_destino, nombre, descripcion, precio, imagen FROM destinos");
-    return rows;
-};
-
-export const obtenerDestinoPorId = async (id) => {
-    const [rows] = await db.execute("SELECT id_destino, nombre, descripcion, precio, imagen FROM destinos WHERE id_destino = ?", [id]);
-    return rows[0];
-}
-
-export const actualizarDestino = async (id, { nombre, descripcion, precio, imagen }) => {
-    const [result] = await db.execute(
-      "UPDATE destinos SET nombre = ?, descripcion = ?, precio = ?, imagen = ? WHERE id_destino = ?",
-      [nombre, descripcion, precio, imagen, id]
+  static async update(id, destino) {
+    const [result] = await db.query(
+      `UPDATE destinos
+       SET nombre = ?, ubicacion = ?, descripcion = ?, imagen = ?, precio = ?
+       WHERE id_destino = ?`,
+      [
+        destino.nombre,
+        destino.ubicacion,
+        destino.descripcion,
+        destino.imagen,
+        destino.precio,
+        id
+      ]
     );
     return result;
-};
+  }
 
-export const eliminarDestino = async (id) => {
-    const [result] = await db.execute("DELETE FROM destinos WHERE id_destino = ?", [id]);
+  static async delete(id) {
+    const [result] = await db.query("DELETE FROM destinos WHERE id_destino = ?", [id]);
     return result;
-};
-
-export const obtenerDestinosPorNombre = async (nombre) => {
-    const [rows] = await db.execute("SELECT id_destino, nombre, descripcion, precio, imagen FROM destinos WHERE nombre LIKE ?", [`%${nombre}%`]);
-    return rows;
+  }
 }
+
+export default DestinoModel;
