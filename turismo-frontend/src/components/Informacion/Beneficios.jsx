@@ -1,36 +1,57 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "./Beneficios.css";
-
 const Beneficios = () => {
-    return (
-        <section className="benefits container-fluid">
-            <div className="row justify-content-center text-center">
-                <div className="col-md-3 col-sm-6 mb-4">
-                    <div className="benefit-item">
-                        <i className="bi bi-trophy-fill benefit-icon"></i>
-                        <strong>Alta Calidad</strong>
-                        <p>Sitios turísticos de primera calidad</p>
-                    </div>
-                </div>
-                <div className="col-md-3 col-sm-6 mb-4">
-                    <div className="benefit-item">
-                        <i className="bi bi-shield-check benefit-icon"></i>
-                        <strong>Protección de la garantía</strong>
-                        <p>Más de 2 años</p>
-                    </div>
-                </div>
-                <div className="col-md-3 col-sm-6 mb-4">
-                    <div className="benefit-item">
-                        <i className="bi bi-headset benefit-icon"></i>
-                        <strong>Soporte 24/7</strong>
-                        <p>Soporte dedicado</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-};
+  const beneficios = [
+    {
+      icon: "bi-globe",
+      titulo: "Destinos Exclusivos",
+      descripcion: "Accede a los mejores destinos turísticos seleccionados por expertos.",
+    },
+    {
+      icon: "bi-people-fill",
+      titulo: "Guías Profesionales",
+      descripcion: "Nuestros guías son expertos con años de experiencia en el sector.",
+    },
+    {
+      icon: "bi-shield-check",
+      titulo: "Seguridad Garantizada",
+      descripcion: "Tu seguridad es nuestra prioridad en todos nuestros tours.",
+    },
+    {
+      icon: "bi-cash-coin",
+      titulo: "Precios Competitivos",
+      descripcion: "Ofrecemos la mejor relación calidad-precio del mercado.",
+    },
+    {
+      icon: "bi-calendar-check",
+      titulo: "Flexibilidad",
+      descripcion: "Adaptamos nuestros tours a tus necesidades y preferencias.",
+    },
+    {
+      icon: "bi-heart-fill",
+      titulo: "Experiencias Únicas",
+      descripcion: "Creamos recuerdos inolvidables en cada viaje que realizas.",
+    },
+  ]
 
-export default Beneficios;
+  return (
+    <section className="py-5">
+      <div className="container">
+        <h2 className="text-center mb-5">Nuestros Beneficios</h2>
+        <div className="row">
+          {beneficios.map((beneficio, index) => (
+            <div key={index} className="col-md-4 mb-4">
+              <div className="card h-100 border-0 text-center">
+                <div className="card-body">
+                  <i className={`bi ${beneficio.icon} beneficios-icon mb-3`}></i>
+                  <h5 className="card-title">{beneficio.titulo}</h5>
+                  <p className="card-text">{beneficio.descripcion}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Beneficios

@@ -1,29 +1,69 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import AdminPanel from "./pages/adminPanel.jsx";
+import { Routes, Route } from "react-router-dom"
+import Navbar from "./components/Header/Navbar"
+import Footer from "./components/Footer/Footer"
+import Home from "./pages/Home"
+import Destinos from "./pages/Destinos"
+import Guias from "./pages/Guias"
+import Informacion from "./pages/Informacion"
+import Contacto from "./pages/Contacto"
+import Login from "./pages/Login"
+import Registro from "./pages/Registro"
+import Reservas from "./pages/Reservas"
+import Resenas from "./pages/Resenas"
+import Dashboard from "./pages/Dashboard"
+import AdminPanel from "./pages/AdminPanel"
+import ProtectedRoute from "./components/ProtectedRoute"
 
-import ProtectedRoute from "./components/ProtectedRoute";
-
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
+    <div className="App">
+      <Navbar />
+      <main className="container py-4">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/destinos" element={<Destinos />} />
+          <Route path="/guias" element={<Guias />} />
+          <Route path="/informacion" element={<Informacion />} />
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route
+            path="/reservas"
+            element={
+              <ProtectedRoute>
+                <Reservas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/resenas"
+            element={
+              <ProtectedRoute>
+                <Resenas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute adminRoute={true}>
+                <AdminPanel />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  )
+}
 
-        {/* Ruta protegida para admin */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute rolRequerido="admin">
-              <AdminPanel />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Agrega más rutas aquí */}
-      </Routes>
-    </Router>
-  );
-};
-
-export default App;
+export default App

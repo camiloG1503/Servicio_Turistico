@@ -1,20 +1,23 @@
-import { Link } from "react-router-dom";
-import "./HomeBanner.css";
+import { Link } from "react-router-dom"
 
 const HomeBanner = () => {
-    return (
-    <div className="home-banner d-flex align-items-center justify-content-center text-center">
-        <div className="container">
-        <h1 className="display-4 fw-bold mb-4 text-primary">Explora con nosotros</h1>
-        <p className="lead mb-4 text-dark">
-            Descubre experiencias únicas en los destinos más fascinantes. Desde playas paradisíacas hasta ciudades llenas de historia, diseñamos cada aventura para que vivas momentos inolvidables.
-        </p>
-        <Link to="/destinos" className="btn btn-primary btn-lg">
-            Ver Destinos
+  return (
+    <div
+      className="banner"
+      style={{
+        backgroundImage:
+          "url(https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80)",
+      }}
+    >
+      <div className="banner-content">
+        <h1 className="display-4">Descubre Nuevos Destinos</h1>
+        <p className="lead">Explora los mejores lugares turísticos con nuestros guías expertos</p>
+        <Link to="/destinos" className="btn btn-primary btn-lg mt-3">
+          Ver Destinos
         </Link>
-        </div>
+      </div>
     </div>
-    );
-};
+  )
+}
 
-export default HomeBanner;
+export default HomeBanner

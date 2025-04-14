@@ -1,60 +1,80 @@
-import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "./Footer.css";
+import { Link } from "react-router-dom"
 
 const Footer = () => {
-    return (
-    <footer className="footer">
-        <div className="footer-container">
-        {/* Información de la empresa */}
-        <div className="footer-section">
-            <h4 className="footer-title">Elite Tours</h4>
+  return (
+    <footer className="footer mt-5">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 mb-4">
+            <h5>Servicio Turístico</h5>
             <p>
-            Cali, Cra 25,<br />
-            Calle 50,<br />
-            Colombia
+              Ofrecemos los mejores destinos turísticos con guías expertos para que disfrutes de una experiencia
+              inolvidable.
             </p>
-            <p className="footer-copy">
-            2025 Elite Tours. Todos los derechos reservados
-            </p>
-        </div>
-
-        {/* Enlaces de navegación */}
-        <div className="footer-section">
-            <h5 className="footer-subtitle">Links</h5>
-            <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/destinos">Destinos</Link></li>
-            <li><Link to="/reservas">Reservas</Link></li>
-            <li><Link to="/guias">Guias</Link></li>
-            <li><Link to="/reseñas">Reseñas</Link></li>
-            <li><Link to="/contacto">Contacto</Link></li>
+          </div>
+          <div className="col-md-4 mb-4">
+            <h5>Enlaces Rápidos</h5>
+            <ul className="list-unstyled">
+              <li>
+                <Link className="text-white text-decoration-none" to="/">
+                  Inicio
+                </Link>
+              </li>
+              <li>
+                <Link className="text-white text-decoration-none" to="/destinos">
+                  Destinos
+                </Link>
+              </li>
+              <li>
+                <Link className="text-white text-decoration-none" to="/guias">
+                  Guías
+                </Link>
+              </li>
+              <li>
+                <Link className="text-white text-decoration-none" to="/informacion">
+                  Información
+                </Link>
+              </li>
+              <li>
+                <Link className="text-white text-decoration-none" to="/contacto">
+                  Contacto
+                </Link>
+              </li>
             </ul>
+          </div>
+          <div className="col-md-4 mb-4">
+            <h5>Contacto</h5>
+            <address>
+              <p>
+                <i className="bi bi-geo-alt-fill me-2"></i> Calle Principal #123, Ciudad
+              </p>
+              <p>
+                <i className="bi bi-telephone-fill me-2"></i> +123 456 7890
+              </p>
+              <p>
+                <i className="bi bi-envelope-fill me-2"></i> info@servicioturistico.com
+              </p>
+            </address>
+            <div className="social-icons">
+              <a href="#" className="text-white me-3">
+                <i className="bi bi-facebook"></i>
+              </a>
+              <a href="#" className="text-white me-3">
+                <i className="bi bi-twitter"></i>
+              </a>
+              <a href="#" className="text-white me-3">
+                <i className="bi bi-instagram"></i>
+              </a>
+            </div>
+          </div>
         </div>
-
-        {/* Información adicional */}
-        <div className="footer-section">
-            <h5 className="footer-subtitle">Información</h5>
-            <ul>
-            <li><Link to="/informacion">Sobre nosotros</Link></li>
-            <li><Link to="/informacion">Opciones de pago</Link></li>
-            <li><Link to="/informacion">Reembolso</Link></li>
-            <li><Link to="/informacion">Políticas de privacidad</Link></li>
-            </ul>
+        <hr className="bg-light" />
+        <div className="text-center">
+          <p>&copy; {new Date().getFullYear()} Servicio Turístico. Todos los derechos reservados.</p>
         </div>
-
-        {/* Formulario de suscripción */}
-        <div className="footer-section">
-            <h5 className="footer-subtitle">Ofertas exclusivas en tu email</h5>
-            <form className="footer-form">
-            <input type="email" placeholder="Ingresa tu correo electrónico" />
-            <button type="submit">Enviar</button>
-            </form>
-        </div>
-        </div>
+      </div>
     </footer>
-    );
-};
+  )
+}
 
-export default Footer;
+export default Footer

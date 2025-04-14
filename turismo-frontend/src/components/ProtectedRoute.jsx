@@ -1,18 +1,19 @@
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom"
+import { isAuthenticated, isAdmin } from "../api/auth"
 
-const ProtectedRoute = ({ children, rolRequerido }) => {
-  const token = localStorage.getItem("token");
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
+const ProtectedRoute = ({ children, adminRoute = false }) => {
+  const authenticated = isAuthenticated()
+  const admin = isAdmin()
 
-  if (!token || !usuario) {
-    return <Navigate to="/login" />;
+  if (!authenticated) {
+    return <Navigate to="/login" />
   }
 
-  if (rolRequerido && usuario.rol !== rolRequerido) {
-    return <Navigate to="/unauthorized" />;
+  if (adminRoute && !admin) {
+    return <Navigate to="/dashboard" />
   }
 
-  return children;
-};
+  return children
+}
 
-export default ProtectedRoute;
+export default ProtectedRoute

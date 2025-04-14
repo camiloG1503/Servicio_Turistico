@@ -1,102 +1,138 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "./RegistroForm.css";
+"use client"
+
+import { useState } from "react"
+import { useNavigate, Link } from "react-router-dom"
+import { register } from "../../api/auth"
 
 const RegistroForm = () => {
-    const [formulario, setFormulario] = useState({
+  const navigate = useNavigate()
+  const [userData, setUserData] = useState({
     nombre: "",
-    correo: "",
-    contraseña: "",
-    confirmar: "",
-    });
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
-    const [mostrarPassword, setMostrarPassword] = useState(false);
-    const [mostrarConfirmar, setMostrarConfirmar] = useState(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setUserData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
 
-    const togglePassword = () => setMostrarPassword(!mostrarPassword);
-    const toggleConfirmar = () => setMostrarConfirmar(!mostrarConfirmar);
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-    const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormulario({ ...formulario, [name]: value });
-    };
-
-    const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formulario.contraseña !== formulario.confirmar) {
-        alert("Las contraseñas no coinciden");
-        return;
+    // Validate passwords match
+    if (userData.password !== userData.confirmPassword) {
+      setError("Las contraseñas no coinciden")
+      return
     }
-    console.log("Registro exitoso:", formulario);
-    };
 
-    return (
-    <div className="registro-form-container d-flex justify-content-center align-items-center">
-        <div className="registro-form p-4 shadow rounded bg-white">
-        <h4 className="mb-4 text-center">Crear cuenta</h4>
-        <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-            <label htmlFor="nombre" className="form-label">Nombre completo</label>
+    setLoading(true)
+    setError("")
+
+    try {
+      const { confirmPassword, ...registerData } = userData
+      const response = await register(registerData)
+      localStorage.setItem("token", response.token)
+      localStorage.setItem("user", JSON.stringify(response.user))
+      navigate("/dashboard")
+    } catch (error) {
+      setError("Error al registrar. Por favor, inténtalo de nuevo.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="card shadow-sm">
+      <div className="card-body">
+        <h3 className="card-title text-center mb-4">Registro</h3>
+
+        {error && <div className="alert alert-danger mb-3">{error}</div>}
+
+        <form onSubmit={handleSubmit} className="registro-form">
+          <div className="mb-3">
+            <label htmlFor="nombre" className="form-label">
+              Nombre Completo
+            </label>
             <input
-                type="text"
-                className="form-control"
-                id="nombre"
-                name="nombre"
-                value={formulario.nombre}
-                onChange={handleChange}
-                required
+              type="text"
+              className="form-control"
+              id="nombre"
+              name="nombre"
+              value={userData.nombre}
+              onChange={handleChange}
+              required
             />
-            </div>
-            <div className="mb-3">
-            <label htmlFor="correo" className="form-label">Correo electrónico</label>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
             <input
-                type="email"
-                className="form-control"
-                id="correo"
-                name="correo"
-                value={formulario.correo}
-                onChange={handleChange}
-                required
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              required
             />
-            </div>
-            <div className="mb-3 position-relative">
-            <label htmlFor="contraseña" className="form-label">Contraseña</label>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Contraseña
+            </label>
             <input
-                type={mostrarPassword ? "text" : "password"}
-                className="form-control"
-                id="contraseña"
-                name="contraseña"
-                value={formulario.contraseña}
-                onChange={handleChange}
-                required
+              type="password"
+              className="form-control"
+              id="password"
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+              required
+              minLength="6"
             />
-            <i
-                className={`bi ${mostrarPassword ? "bi-eye-slash" : "bi-eye"} toggle-icon`}
-                onClick={togglePassword}
-            ></i>
-            </div>
-            <div className="mb-3 position-relative">
-            <label htmlFor="confirmar" className="form-label">Confirmar contraseña</label>
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="confirmPassword" className="form-label">
+              Confirmar Contraseña
+            </label>
             <input
-                type={mostrarConfirmar ? "text" : "password"}
-                className="form-control"
-                id="confirmar"
-                name="confirmar"
-                value={formulario.confirmar}
-                onChange={handleChange}
-                required
+              type="password"
+              className="form-control"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={userData.confirmPassword}
+              onChange={handleChange}
+              required
+              minLength="6"
             />
-            <i
-                className={`bi ${mostrarConfirmar ? "bi-eye-slash" : "bi-eye"} toggle-icon`}
-                onClick={toggleConfirmar}
-            ></i>
-            </div>
-            <button type="submit" className="btn btn-primary w-100">Registrarse</button>
+          </div>
+
+          <div className="d-grid gap-2">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? "Registrando..." : "Registrarse"}
+            </button>
+          </div>
+
+          <div className="text-center mt-3">
+            <p>
+              ¿Ya tienes una cuenta? <Link to="/login">Iniciar Sesión</Link>
+            </p>
+          </div>
         </form>
-        </div>
+      </div>
     </div>
-    );
-};
+  )
+}
 
-export default RegistroForm;
+export default RegistroForm

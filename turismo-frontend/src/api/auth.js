@@ -1,13 +1,34 @@
-const API_URL = "http://localhost:5000/api/auth";
+import { fetchData } from "./api"
 
-export const login = async (email, contrasena) => {
-  const response = await fetch(`${API_URL}/login`, {
+export const login = async (credentials) => {
+  return await fetchData("/usuarios/login", { // Cambiado a /usuarios/login
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, contrasena }),
-  });
+    body: JSON.stringify(credentials),
+  })
+}
 
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error || "Error en login");
-  return data;
-};
+export const register = async (userData) => {
+  return await fetchData("/usuarios/register", { // Cambiado a /usuarios/register
+    method: "POST",
+    body: JSON.stringify(userData),
+  })
+}
+
+export const logout = () => {
+  localStorage.removeItem("token")
+  localStorage.removeItem("user")
+}
+
+export const getCurrentUser = () => {
+  const userStr = localStorage.getItem("user")
+  return userStr ? JSON.parse(userStr) : null
+}
+
+export const isAuthenticated = () => {
+  return !!localStorage.getItem("token")
+}
+
+export const isAdmin = () => {
+  const user = getCurrentUser()
+  return user && user.role === "admin"
+}

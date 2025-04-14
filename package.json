@@ -1,0 +1,14 @@
+{
+  "name": "servicio-turistico",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run dev-back\" \"npm run dev-front\"",
+    "dev-back": "cd turismo-backend && nodemon server.js",
+    "dev-front": "cd turismo-frontend && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.0.1"
+  }
+}
+
