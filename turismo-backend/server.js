@@ -16,13 +16,13 @@ app.use(cors());
 app.use(express.json());
 
 // Rutas
-app.use("/api/usuarios", usuarioRoutes);
-app.use("/api/destinos", destinoRoutes);
-app.use("/api/reservas", reservaRoutes);
-app.use("/api/guias", guiaRoutes);
-app.use("/api/resenas", resenaRoutes);
+app.use("/api/usuarios", usuarioRoutes); // yes
+app.use("/api/destinos", destinoRoutes); // yes
+app.use("/api/reservas", reservaRoutes); // yes
+app.use("/api/guias", guiaRoutes); // yes
+app.use("/api/resenas", resenaRoutes); 
 app.use("/api/pagos", pagoRoutes);
-app.use("/api/admin", adminRoutes);
+app.use("/api/admin", adminRoutes); // yes
 
 // Servidor
 const PORT = process.env.PORT || 5000;

@@ -25,7 +25,7 @@ router.get("/perfil", verificarToken, obtenerPerfil);
 router.get("/", verificarToken, verificarRol(["admin"]), listarUsuarios);
 
 // Operaciones por ID (admin o interno según config)
-router.get("/:id", verificarToken, obtenerUsuario);
+router.get("/:id", verificarToken, verificarRol(["admin"]), obtenerUsuario);
 router.put("/:id", verificarToken, editarUsuario);
 router.delete("/:id", verificarToken, borrarUsuario);
 

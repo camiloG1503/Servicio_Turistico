@@ -21,8 +21,8 @@ router.get("/mis-reservas", verificarToken, reservasPorUsuario);
 // Admin y guía
 router.get("/", verificarToken, verificarRol(["admin", "guia"]), listarReservas);
 router.get("/:id", verificarToken, verificarRol(["admin", "guia"]), obtenerReserva);
-router.put("/:id", verificarToken, verificarRol(["admin", "guia"]), editarReserva);
-router.delete("/:id", verificarToken, verificarRol(["admin"]), borrarReserva);
+router.put("/:id", verificarToken, verificarRol(["turista"]), editarReserva);
+router.delete("/:id", verificarToken, verificarRol(["turista"]), borrarReserva);
 router.get("/admin/reservas-usuarios", verificarToken, verificarRol(["admin"]), reservasConUsuarios);
 
 export default router;

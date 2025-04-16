@@ -20,7 +20,7 @@ router.get("/:id", obtenerResena);
 router.post("/", verificarToken, verificarRol(["turista"]), crearResena);
 
 // Admin puede eliminar
-router.delete("/:id", verificarToken, verificarRol(["admin"]), borrarResena);
+router.delete("/:id", verificarToken, verificarRol(["turista"]), borrarResena);
 router.get("/admin/resenas-usuarios", verificarToken, verificarRol(["admin"]), resenasConUsuarios);
 
 

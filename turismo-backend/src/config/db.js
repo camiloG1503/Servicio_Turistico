@@ -11,5 +11,5 @@ const db = await mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-console.log("✅ Conexión exitosa a MySQL");
+console.log("Conexión exitosa a MySQL");
 export default db;
