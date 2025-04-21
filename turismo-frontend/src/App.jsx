@@ -1,101 +1,68 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { AuthProvider } from "./context/AuthContext"
-import ProtectedRoute from "./components/common/ProtectedRoute"
-import AdminRoute from "./components/common/AdminRoute"
-import GuideRoute from "./components/common/GuideRoute"
-import Layout from "./components/layout/Layout"
-
-// Auth
-import Login from "./components/auth/Login"
-import Register from "./components/auth/Register"
-
-// Usuario
-import Perfil from "./components/usuario/Perfil"
-import UsuarioList from "./components/usuario/UsuarioList"
-import UsuarioDetalle from "./components/usuario/UsuarioDetalle"
-
-// Admin
-import AdminDashboard from "./components/admin/AdminDashboard"
-
-// Guias
-import GuiasList from "./components/guias/GuiasList"
-import GuiaDetalle from "./components/guias/GuiaDetalle"
-import GuiaForm from "./components/guias/GuiaForm"
-import ReservasGuias from "./components/guias/ReservasGuias"
-
-// Destinos
-import DestinosList from "./components/destinos/DestinosList"
-import DestinoDetalle from "./components/destinos/DestinoDetalle"
-import DestinoForm from "./components/destinos/DestinoForm"
-
-// Reservas
-import ReservasTurista from "./components/reservas/ReservasTurista"
-import ReservasAdminGuia from "./components/reservas/ReservasAdminGuia"
-import ReservaForm from "./components/reservas/ReservaForm"
-
-// Reseñas
-import ResenasList from "./components/resenas/ResenasList"
-import ResenaForm from "./components/resenas/ResenaForm"
-
-// Pagos
-import PagosTurista from "./components/pagos/PagosTurista"
-import PagosAdmin from "./components/pagos/PagosAdmin"
+// src/App.jsx
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./layout/Layout";
 
 // Páginas públicas
-import Home from "./pages/Home"
-import NotFound from "./pages/NotFound"
+import Home from "./pages/Home";
+import Destinos from "./pages/Destinos";
+import DestinoDetalle from "./pages/DestinoDetalle";
+import Guias from "./pages/Guias";
+import GuiaDetalle from "./pages/GuiaDetalle";
+import Reseñas from "./pages/Resenas";
+import Contacto from "./pages/Contacto";
+import Informacion from "./pages/Informacion";
 
-function App() {
-  return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            {/* Rutas públicas */}
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="guias" element={<GuiasList />} />
-            <Route path="guias/:id" element={<GuiaDetalle />} />
-            <Route path="destinos" element={<DestinosList />} />
-            <Route path="destinos/:id" element={<DestinoDetalle />} />
-            <Route path="resenas" element={<ResenasList />} />
+// Autenticación
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-            {/* Rutas protegidas para usuarios autenticados */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="perfil" element={<Perfil />} />
-              <Route path="mis-reservas" element={<ReservasTurista />} />
-              <Route path="reservas/nueva" element={<ReservaForm />} />
-              <Route path="reservas/editar/:id" element={<ReservaForm />} />
-              <Route path="resenas/nueva" element={<ResenaForm />} />
-              <Route path="pagos" element={<PagosTurista />} />
-            </Route>
+// Funcionalidades
+import Reservas from "./pages/Reservas";
+import Pagos from "./pages/Pagos";
+import Profile from "./pages/Profile"; // Nueva importación
 
-            {/* Rutas protegidas para guías */}
-            <Route element={<GuideRoute />}>
-              <Route path="guias/reservas" element={<ReservasGuias />} />
-            </Route>
+// Administración
+import PanelAdmin from "./pages/PanelAdmin";
+import Dashboard from "./pages/Dashboard";
 
-            {/* Rutas protegidas para administradores */}
-            <Route element={<AdminRoute />}>
-              <Route path="admin/dashboard" element={<AdminDashboard />} />
-              <Route path="admin/usuarios" element={<UsuarioList />} />
-              <Route path="admin/usuarios/:id" element={<UsuarioDetalle />} />
-              <Route path="admin/guias/nuevo" element={<GuiaForm />} />
-              <Route path="admin/guias/editar/:id" element={<GuiaForm />} />
-              <Route path="admin/destinos/nuevo" element={<DestinoForm />} />
-              <Route path="admin/destinos/editar/:id" element={<DestinoForm />} />
-              <Route path="admin/reservas" element={<ReservasAdminGuia />} />
-              <Route path="admin/pagos" element={<PagosAdmin />} />
-            </Route>
+// Guias
+import PanelGuia from "./pages/PanelGuia";
 
-            {/* Ruta 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </Router>
-    </AuthProvider>
-  )
-}
+const App = () => (
+  <Router>
+    <Layout>
+      <Routes>
+        {/* 🟢 Públicas */}
+        <Route path="/" element={<Home />} />
+        <Route path="/destinos" element={<Destinos />} />
+        <Route path="/destinos/:id" element={<DestinoDetalle />} />
+        <Route path="/guias" element={<Guias />} />
+        <Route path="/guias/:id" element={<GuiaDetalle />} />
+        <Route path="/reseñas" element={<Reseñas />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/informacion" element={<Informacion />} />
 
-export default App
+        {/* 🔐 Autenticación */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
+
+        {/* 🙋‍♂️ Usuario autenticado */}
+        <Route path="/reservas" element={<Reservas />} />
+        <Route path="/pagos" element={<Pagos />} />
+        <Route path="/perfil" element={<Profile />} />
+
+        {/* 🔧 Administración */}
+        <Route path="/panelAdmin" element={<PanelAdmin />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* 👩‍🏫 Panel de guías */}
+        <Route path="/panelGuia" element={<PanelGuia />} />
+        
+        {/* Manejo de rutas no encontradas */}
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </Layout>
+  </Router>
+);
+
+export default App;

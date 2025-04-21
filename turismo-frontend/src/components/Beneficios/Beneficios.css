@@ -1,0 +1,50 @@
+/* src/components/Beneficios/Beneficios.css */
+.benefits-section {
+    background: linear-gradient(135deg, #f9f5f0 0%, #f0e6d6 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.benefits-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #d4a76a, #b88a5a, #d4a76a);
+}
+
+.benefit-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f0e5 0%, #e7d5b7 100%);
+    border-radius: 50%;
+    color: #b88a5a;
+    font-size: 28px;
+    border: 2px solid #e7d5b7;
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon-wrapper {
+    background: linear-gradient(135deg, #e7d5b7 0%, #d4a76a 100%);
+    color: white;
+    transform: scale(1.1);
+}

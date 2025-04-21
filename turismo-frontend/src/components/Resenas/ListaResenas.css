@@ -1,0 +1,33 @@
+.resenas-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .resenas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Estilos responsivos - en pantallas pequeñas mostrar 1 columna */
+  @media (max-width: 576px) {
+    .resenas-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* En pantallas medianas mostrar 2 columnas */
+  @media (min-width: 577px) and (max-width: 768px) {
+    .resenas-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* En pantallas grandes mostrar 4 columnas */
+  @media (min-width: 769px) {
+    .resenas-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+}

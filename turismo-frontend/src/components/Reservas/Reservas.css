@@ -1,0 +1,56 @@
+/* Títulos de sección */
+.reservas-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #007b8f;
+    margin-bottom: 0.5rem;
+}
+
+.reservas-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+/* Tabla de reservas */
+.table-reservas {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table-reservas th {
+    background-color: #f0f0f0;
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+}
+
+.table-reservas td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Badges de estado */
+.badge-reservada {
+    background-color: #198754;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reservas-title {
+    font-size: 1.4rem;
+    text-align: center;
+    }
+
+    .table-reservas td, .table-reservas th {
+    font-size: 0.9rem;
+    padding: 8px;
+    }
+}

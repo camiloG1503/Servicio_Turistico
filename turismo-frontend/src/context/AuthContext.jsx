@@ -1,99 +1,30 @@
-import { createContext, useState, useEffect, useContext } from "react"
-import axios from "axios"
+import { createContext, useContext, useState, useEffect } from "react";
 
-const AuthContext = createContext()
-
-export const useAuth = () => {
-  return useContext(AuthContext)
-}
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+    const [usuario, setUsuario] = useState(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (token) {
-      checkUserProfile(token)
-    } else {
-      setLoading(false)
-    }
-  }, [])
+    useEffect(() => {
+    const userStored = localStorage.getItem("usuario");
+    if (userStored) setUsuario(JSON.parse(userStored));
+    }, []);
 
-  const checkUserProfile = async (token) => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-      const response = await axios.get("http://localhost:5000/api/usuarios/perfil", config)
-      setCurrentUser(response.data)
-      console.log("Usuario cargado:", response.data)
-    } catch (error) {
-      console.error("Error al verificar el perfil:", error)
-      localStorage.removeItem("token")
-    } finally {
-      setLoading(false)
-    }
-  }
+    const login = (userData) => {
+    setUsuario(userData);
+    localStorage.setItem("usuario", JSON.stringify(userData));
+    };
 
-  const login = async (email, password) => {
-    try {
-      setError(null)
-      const response = await axios.post("http://localhost:5000/api/usuarios/login", {
-        email,
-        password,
-      })
-      const { token, usuario } = response.data
-      localStorage.setItem("token", token)
-      setCurrentUser(usuario)
-      return usuario
-    } catch (error) {
-      setError(error.response?.data?.mensaje || "Error al iniciar sesión")
-      throw error
-    }
-  }
+    const logout = () => {
+    setUsuario(null);
+    localStorage.removeItem("usuario");
+    };
 
-  const register = async (userData) => {
-    try {
-      setError(null)
-      const response = await axios.post("http://localhost:5000/api/usuarios/register", userData)
-      const { token, usuario } = response.data
-      localStorage.setItem("token", token)
-      setCurrentUser(usuario)
-      return usuario
-    } catch (error) {
-      setError(error.response?.data?.mensaje || "Error al registrarse")
-      throw error
-    }
-  }
-
-  const logout = () => {
-    localStorage.removeItem("token")
-    setCurrentUser(null)
-  }
-
-  const isAdmin = () => currentUser?.rol === "admin"
-  const isGuide = () => currentUser?.rol === "guia"
-  const isTourist = () => currentUser?.rol === "turista"
-
-  const value = {
-    currentUser,
-    loading,
-    error,
-    login,
-    register,
-    logout,
-    isAdmin,
-    isGuide,
-    isTourist,
-  }
-
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
+    return (
+    <AuthContext.Provider value={{ usuario, login, logout }}>
+        {children}
     </AuthContext.Provider>
-  )
-}
+    );
+};
+
+export const useAuth = () => useContext(AuthContext);

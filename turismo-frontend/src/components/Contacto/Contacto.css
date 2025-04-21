@@ -1,0 +1,81 @@
+.contact-section {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
+
+.contact-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    padding: 30px;
+    border: none;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.contact-icon {
+    font-size: 1.5rem;
+    color: #4e66f8;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.contact-info-content {
+    flex-grow: 1;
+}
+
+.contact-info-label {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.contact-info-text {
+    color: #718096;
+    line-height: 1.6;
+}
+
+.contact-form .form-control {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+}
+
+.contact-form .form-control:focus {
+    border-color: #4e66f8;
+    box-shadow: 0 0 0 3px rgba(78, 102, 248, 0.1);
+}
+
+.contact-form .btn-primary {
+    background-color: #4e66f8;
+    border: none;
+    padding: 12px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.contact-form .btn-primary:hover {
+    background-color: #3a56e8;
+    transform: translateY(-2px);
+}
+
+.contact-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+    margin: 30px 0;
+}

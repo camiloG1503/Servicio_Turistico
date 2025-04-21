@@ -1,0 +1,26 @@
+.tabla-pagos {
+    margin-top: 20px;
+}
+
+.tabla-pagos-table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tabla-pagos-table th {
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.tabla-pagos-table td {
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.badge {
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    text-transform: capitalize;
+}  

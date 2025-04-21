@@ -1,0 +1,342 @@
+/* Estilos base */
+:root {
+    --primary-color: #4361ee;
+    --primary-hover: #3a56d4;
+    --secondary-color: #3f37c9;
+    --success-color: #4cc9f0;
+    --danger-color: #f72585;
+    --warning-color: #f8961e;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --gray-color: #6c757d;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+  
+  /* Estructura principal */
+  .admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--dark-color);
+  }
+  
+  /* Encabezado */
+  .admin-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  
+  .admin-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  
+  .admin-title i {
+    font-size: 2.2rem;
+  }
+  
+  .admin-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray-color);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  /* Pestañas de navegación */
+  .admin-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .tab-btn {
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    background-color: white;
+    color: var(--gray-color);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #e0e0e0;
+    box-shadow: var(--box-shadow);
+  }
+  
+  .tab-btn:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
+  }
+  
+  .tab-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+  }
+  
+  .tab-btn i {
+    font-size: 1.1rem;
+  }
+  
+  /* Tarjetas */
+  .card-admin {
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: var(--box-shadow);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    border: none;
+    transition: var(--transition);
+  }
+  
+  .card-admin:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-size: 1.4rem;
+    color: var(--dark-color);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .card-title i {
+    color: var(--primary-color);
+  }
+  
+  /* Formularios */
+  .admin-form {
+    padding: 0.5rem 0;
+  }
+  
+  .form-group {
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dark-color);
+  }
+  
+  .form-control, .form-select {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: #f9f9f9;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    background-color: white;
+    outline: none;
+  }
+  
+  .input-icon {
+    position: relative;
+  }
+  
+  .input-icon i {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    color: var(--gray-color);
+  }
+  
+  .input-icon .form-control {
+    padding-left: 3rem;
+  }
+  
+  /* Botones */
+  .btn {
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+  }
+  
+  .btn-warning {
+    background-color: var(--warning-color);
+    color: white;
+  }
+  
+  .btn-warning:hover {
+    background-color: #e08a1a;
+  }
+  
+  .btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background-color: #e5177b;
+  }
+  
+  .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Tablas */
+  .admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+  }
+  
+  .admin-table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .admin-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+  
+  .admin-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+  
+  .admin-table tbody tr:hover {
+    background-color: #f1f3ff;
+  }
+  
+  .admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+  }
+  
+  /* Alertas */
+  .alert {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .alert i {
+    font-size: 1.5rem;
+  }
+  
+  .alert-info {
+    background-color: #e6f7ff;
+    color: #006d9c;
+    border-left: 4px solid #4cc9f0;
+  }
+  
+  .alert-danger {
+    background-color: #ffebee;
+    color: #c62828;
+    border-left: 4px solid var(--danger-color);
+  }
+  
+  /* Responsive */
+  @media (max-width: 992px) {
+    .admin-container {
+      padding: 1.5rem 1rem;
+    }
+    
+    .admin-title {
+      font-size: 2rem;
+    }
+    
+    .card-admin {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .admin-table {
+      display: block;
+      overflow-x: auto;
+    }
+    
+    .tab-btn {
+      padding: 0.65rem 1.25rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .card-admin {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  
+  /* Efecto de carga */
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    height: 20px;
+    margin-bottom: 10px;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
