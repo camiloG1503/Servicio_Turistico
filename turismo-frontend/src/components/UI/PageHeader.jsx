@@ -1,4 +1,3 @@
-// src/components/UI/PageHeader.jsx
 const PageHeader = ({ iconClass, title, subtitle }) => (
     <div className="text-center mb-4">
         {iconClass && <i className={`bi ${iconClass} text-primary fs-2 mb-2`}></i>}
