@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import HomeBanner from "../components/HomeBanner/HomeBanner";
 import GuiaList from "../components/Guias/GuiaList";
 import SectionWrapper from "../components/UI/SectionWrapper";
