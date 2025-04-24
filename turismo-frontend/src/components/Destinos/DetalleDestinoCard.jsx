@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./DetalleDestinoCard.css";
 
 const DetalleDestinoCard = ({ destino }) => {
-    // Función para formatear el precio con separadores de miles
     const formatPrice = (price) => {
         return new Intl.NumberFormat('es-CO', {
             style: 'currency',
@@ -12,7 +11,6 @@ const DetalleDestinoCard = ({ destino }) => {
         }).format(price);
     };
 
-    // Servicios incluidos (podrías obtenerlos de la API también)
     const servicios = [
         "Alojamiento en hotel 4 estrellas",
         "Desayuno buffet incluido",
@@ -32,7 +30,6 @@ const DetalleDestinoCard = ({ destino }) => {
             </div>
 
             <div className="destino-grid">
-                {/* Galería de imágenes */}
                 <div className="destino-gallery">
                     <div className="main-image">
                         <img
@@ -46,7 +43,7 @@ const DetalleDestinoCard = ({ destino }) => {
                         {[1, 2, 3, 4].map((item) => (
                             <div key={item} className="thumbnail">
                                 <img
-                                    src={`/img/${destino.imagen}`} // En realidad deberían ser imágenes diferentes
+                                    src={`/img/${destino.imagen}`}
                                     alt={`Vista ${item} de ${destino.nombre}`}
                                     className="img-thumb"
                                 />
@@ -55,7 +52,6 @@ const DetalleDestinoCard = ({ destino }) => {
                     </div>
                 </div>
 
-                {/* Información principal */}
                 <div className="destino-info">
                     <div className="info-header">
                         <div className="destino-meta">
@@ -111,7 +107,6 @@ const DetalleDestinoCard = ({ destino }) => {
                     </div>
                 </div>
 
-                {/* Información adicional */}
                 <div className="destino-extra">
                     <div className="extra-card clima">
                         <h4>
