@@ -18,7 +18,6 @@ const DestinoCard = ({ destino }) => {
         }
     };
 
-    // Generar una calificación aleatoria si no está definida
     const calificacion = destino.calificacion || (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
 
     return (
