@@ -41,7 +41,6 @@ const ProfileForm = () => {
     setSuccess("");
     setIsLoading(true);
 
-    // Validaciones
     if (!form.nombre.trim()) {
       setIsLoading(false);
       return setError("El nombre es requerido");
