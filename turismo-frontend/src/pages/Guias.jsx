@@ -1,4 +1,3 @@
-// src/pages/Guias.jsx
 import GuiaList from "../components/Guias/GuiaList";
 import SectionWrapper from "../components/UI/SectionWrapper";
 import PageHeader from "../components/UI/PageHeader";
