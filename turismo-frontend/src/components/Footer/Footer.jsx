@@ -1,4 +1,3 @@
-// src/components/Footer/Footer.jsx
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -8,7 +7,6 @@ const Footer = () => {
     return (
     <footer className="footer">
         <div className="footer-container">
-        {/* Información de la empresa */}
         <div className="footer-section">
             <h4 className="footer-title">Elite Tours</h4>
             <p>
@@ -21,7 +19,6 @@ const Footer = () => {
             </p>
         </div>
 
-        {/* Enlaces de navegación */}
         <div className="footer-section">
             <h5 className="footer-subtitle">Links</h5>
             <ul>
@@ -34,7 +31,6 @@ const Footer = () => {
             </ul>
         </div>
 
-        {/* Información adicional */}
         <div className="footer-section">
             <h5 className="footer-subtitle">Información</h5>
             <ul>
@@ -45,7 +41,6 @@ const Footer = () => {
             </ul>
         </div>
 
-        {/* Formulario de suscripción */}
         <div className="footer-section">
             <h5 className="footer-subtitle">Ofertas exclusivas en tu email</h5>
             <form className="footer-form">
