@@ -95,7 +95,6 @@ const ListaResenas = () => {
     setVisibleCount(4);
   }, [searchTerm, resenas, sortOrder, filtroCalificacion]);
 
-  // Función para dividir las reseñas en grupos de 4
   const renderResenaGroups = () => {
     const groups = [];
     for (let i = 0; i < Math.min(visibleCount, filteredResenas.length); i += 4) {
@@ -125,7 +124,6 @@ const ListaResenas = () => {
 
   return (
     <div className="container py-4">
-      {/* Formulario para nueva reseña */}
       {usuario?.rol === "turista" && (
         <div className="card mb-4 border-0 shadow-sm">
           <div className="card-body">
@@ -138,7 +136,6 @@ const ListaResenas = () => {
         </div>
       )}
 
-      {/* Panel de Filtros */}
       <div className="card mb-4 border-0 shadow-sm">
         <div className="card-body">
           <div className="row g-3 align-items-center">
@@ -185,7 +182,6 @@ const ListaResenas = () => {
         </div>
       </div>
 
-      {/* Estado de carga */}
       {loading && (
         <div className="text-center my-5">
           <div className="spinner-border text-primary" role="status">
@@ -195,7 +191,6 @@ const ListaResenas = () => {
         </div>
       )}
 
-      {/* Mensaje de error */}
       {error && (
         <div className="alert alert-danger d-flex align-items-center">
           <i className="bi bi-exclamation-triangle-fill me-2"></i>
@@ -208,7 +203,6 @@ const ListaResenas = () => {
         </div>
       )}
 
-      {/* Estado vacío */}
       {!loading && !error && filteredResenas.length === 0 && (
         <div className="card border-0 shadow-sm">
           <div className="card-body text-center py-5">
@@ -228,12 +222,10 @@ const ListaResenas = () => {
         </div>
       )}
 
-      {/* Lista de reseñas en formato 4x4 */}
       {!loading && !error && filteredResenas.length > 0 && (
         <>
           {renderResenaGroups()}
 
-          {/* Botón "Ver más" */}
           {visibleCount < filteredResenas.length && (
             <div className="text-center mt-3">
               <button 
@@ -246,7 +238,6 @@ const ListaResenas = () => {
             </div>
           )}
 
-          {/* Contador de reseñas */}
           <div className="text-center text-muted mt-3">
             Mostrando {Math.min(visibleCount, filteredResenas.length)} de {filteredResenas.length} reseñas
           </div>
