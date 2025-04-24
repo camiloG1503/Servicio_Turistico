@@ -1,8 +1,5 @@
 USE turismo;
 
-GRANT ALL PRIVILEGES ON turismo.* TO 'camilo'@'%' IDENTIFIED BY 'admin';
-FLUSH PRIVILEGES;
-
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
