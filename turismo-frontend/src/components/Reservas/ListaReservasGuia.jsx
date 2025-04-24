@@ -121,10 +121,8 @@ const ListaReservasGuia = () => {
         throw new Error(errorData.message || 'Error al asignar la reserva');
       }
 
-      // Eliminada la línea que causaba el warning
       await response.json();
 
-      // Actualización optimista
       const guiaAsignado = guias.find(g => g.id_guia === usuario.id_usuario);
       const actualizarReservas = (prevReservas) => 
         prevReservas.map(reserva => 
