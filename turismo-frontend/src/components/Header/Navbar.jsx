@@ -21,7 +21,6 @@ const Navbar = () => {
           <span className="logo-dot"></span>
         </Link>
 
-        {/* Botón para móvil */}
         <button 
           className="navbar-toggler" 
           type="button" 
@@ -34,9 +33,7 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Contenido del navbar */}
         <div className="collapse navbar-collapse" id="navbarContent">
-          {/* Menú principal */}
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
@@ -71,7 +68,6 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Menú usuario */}
           <ul className="navbar-nav">
             <li className="nav-item dropdown">
               <a
