@@ -13,7 +13,6 @@ const TablaPagos = ({ pagos, rol }) => {
         );
     }
 
-    // Filtrar y ordenar pagos
     const pagosFiltrados = pagos
         .filter(pago => filtroEstado === "todos" || pago.estado_pago.toLowerCase() === filtroEstado.toLowerCase())
         .sort((a, b) => ordenMonto === "desc" ? b.monto - a.monto : a.monto - b.monto);
@@ -22,14 +21,13 @@ const TablaPagos = ({ pagos, rol }) => {
 
     return (
         <div className="card border-0 shadow-sm">
-            {/* Header con filtros */}
             <div className="card-header bg-light border-0">
                 <div className="d-flex justify-content-between align-items-center">
                     <h5 className="mb-0 text-primary">
                         <i className="bi bi-credit-card me-2"></i>
                         Historial de Pagos
                     </h5>
-                    {rol === "admin" && ( // Mostrar filtros y ordenamiento solo para el administrador
+                    {rol === "admin" && (
                         <div className="d-flex">
                             <select 
                                 className="form-select form-select-sm me-2"
@@ -55,7 +53,6 @@ const TablaPagos = ({ pagos, rol }) => {
                 </div>
             </div>
 
-            {/* Tabla de resultados */}
             <div className="card-body p-0">
                 <div className="table-responsive">
                     <table className="table table-hover mb-0">
@@ -125,7 +122,6 @@ const TablaPagos = ({ pagos, rol }) => {
                 </div>
             </div>
 
-            {/* Footer con resumen */}
             <div className="card-footer bg-light border-0">
                 <div className="d-flex justify-content-between align-items-center">
                     <small className="text-muted">
@@ -143,7 +139,6 @@ const TablaPagos = ({ pagos, rol }) => {
                 </div>
             </div>
 
-            {/* Estilos personalizados para el color Nequi */}
             <style jsx>{`
                 .bg-indigo {
                     background-color: #6f42c1;
