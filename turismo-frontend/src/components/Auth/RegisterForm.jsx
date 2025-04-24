@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 Importa esto
+import { useNavigate } from "react-router-dom";
 import AuthForm from "./AuthForm";
 import PasswordInput from "./PasswordInput";
 
 const RegisterForm = () => {
-  const navigate = useNavigate(); // 👈 Instancia el hook de navegación
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ const RegisterForm = () => {
           nombre: formData.name,
           email: formData.email,
           contraseña: formData.password,
-          rol: "turista", // ✅ forzamos rol turista
+          rol: "turista",
         }),
       });
 
@@ -34,7 +34,7 @@ const RegisterForm = () => {
       setSuccess("Usuario registrado exitosamente. Redirigiendo al inicio de sesión...");
 
       setTimeout(() => {
-        navigate("/login"); // ✅ Redirige al formulario de login después de éxito
+        navigate("/login");
       }, 1500);
 
       setFormData({ name: "", email: "", password: "" });
