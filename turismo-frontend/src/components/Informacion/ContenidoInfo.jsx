@@ -1,4 +1,3 @@
-// src/components/Informacion/ContenidoInfo.jsx
 import SobreNosotros from "./SobreNosotros";
 import OpcionesPago from "./OpcionesPago";
 import Reembolso from "./Reembolso";
