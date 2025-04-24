@@ -1,4 +1,3 @@
-// src/components/Informacion/SobreNosotros.jsx
 const SobreNosotros = () => (
     <div className="info-card">
         <div className="info-card-header">
