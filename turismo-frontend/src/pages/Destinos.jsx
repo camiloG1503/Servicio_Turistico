@@ -72,7 +72,7 @@ const Destinos = () => {
 
   const handleFilter = (category) => {
     setActiveFilter(category);
-    setVisibleCount(4); // Resetear la paginación al cambiar filtros
+    setVisibleCount(4);
   };
 
   if (loading) return <SpinnerCentered text="Cargando destinos turísticos..." />;
@@ -85,9 +85,7 @@ const Destinos = () => {
         subtitle="Descubre los lugares más increíbles para tu próxima aventura"
       />
 
-      {/* Controles de búsqueda y filtrado */}
       <div className="destinos-controls mb-5">
-        {/* Barra de búsqueda */}
         <div className="search-container mb-4">
           <div className="input-group search-input">
             <span className="input-group-text bg-white border-end-0">
@@ -103,9 +101,7 @@ const Destinos = () => {
           </div>
         </div>
 
-        {/* Filtros y ordenamiento */}
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-          {/* Filtros por categoría */}
           <div className="filter-buttons">
             <button 
               className={`btn btn-filter ${activeFilter === 'todos' ? 'active' : ''}`}
@@ -133,7 +129,6 @@ const Destinos = () => {
             </button>
           </div>
 
-          {/* Ordenamiento */}
           <div className="sort-container">
             <button 
               className={`btn btn-sort ${priceSort ? 'active' : ''}`}
@@ -148,7 +143,6 @@ const Destinos = () => {
         </div>
       </div>
 
-      {/* Resultados */}
       {filtered.length === 0 ? (
         <EmptyState 
           message="No encontramos destinos que coincidan con tu búsqueda."
