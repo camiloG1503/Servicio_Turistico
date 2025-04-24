@@ -1,4 +1,3 @@
-// src/components/Guias/GuiaList.jsx
 import { useEffect, useState } from "react";
 import GuiaCard from "./GuiaCard";
 import SpinnerCentered from "../UI/SpinnerCentered";
