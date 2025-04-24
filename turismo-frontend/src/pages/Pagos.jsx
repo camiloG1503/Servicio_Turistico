@@ -12,7 +12,7 @@ const Pagos = () => {
     const [filteredPagos, setFilteredPagos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
-    const [sortOrder, setSortOrder] = useState("desc"); // 'asc' o 'desc'
+    const [sortOrder, setSortOrder] = useState("desc");
 
     useEffect(() => {
         const fetchPagos = async () => {
@@ -82,7 +82,6 @@ const Pagos = () => {
                 }
             />
 
-            {/* Controles de búsqueda y ordenamiento solo para admin */}
             {usuario?.rol === "admin" && (
                 <div className="row mb-4 align-items-center">
                     <div className="col-md-9">
