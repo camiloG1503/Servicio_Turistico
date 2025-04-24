@@ -1,4 +1,3 @@
-/* Estilos base */
 .detalle-destino-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -30,7 +29,6 @@
   box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
 }
 
-/* Layout principal */
 .destino-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -50,7 +48,6 @@
   }
 }
 
-/* Galería de imágenes */
 .destino-gallery {
   display: flex;
   flex-direction: column;
@@ -99,7 +96,6 @@
   object-fit: cover;
 }
 
-/* Información principal */
 .destino-info {
   background: white;
   border-radius: 16px;
@@ -203,7 +199,6 @@
   margin-top: 0.2rem;
 }
 
-/* Pie de información */
 .info-footer {
   margin-top: 2rem;
   padding-top: 1.5rem;
@@ -255,7 +250,6 @@
   box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
 }
 
-/* Información adicional */
 .extra-card {
   background: white;
   border-radius: 12px;
@@ -313,7 +307,6 @@
   font-style: italic;
 }
 
-/* Animaciones */
 @keyframes fadeInUp {
   from {
       opacity: 0;
