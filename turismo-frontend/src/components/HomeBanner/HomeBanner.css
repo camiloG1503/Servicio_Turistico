@@ -1,4 +1,3 @@
-/* HomeBanner.css - Versión con movimiento flotante */
 .home-banner {
   position: relative;
   min-height: 100vh;
@@ -63,7 +62,6 @@
   }
 }
 
-/* Resto de los estilos se mantienen igual que en la versión anterior */
 .banner-title {
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 700;
@@ -213,7 +211,6 @@
       background-position: 65% center;
   }
   
-  /* Movimiento más sutil en móviles */
   @keyframes floatAnimation {
       0%, 100% {
           transform: scale(1) translate(0, 0);
