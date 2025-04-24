@@ -1,4 +1,3 @@
-// src/components/UI/SectionWrapper.jsx
 const SectionWrapper = ({ children, className = "" }) => (
     <section className={`container py-5 ${className}`}>
         {children}
