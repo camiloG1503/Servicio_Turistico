@@ -1,4 +1,3 @@
-// src/pages/GuiaDetalle.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SpinnerCentered from "../components/UI/SpinnerCentered";
