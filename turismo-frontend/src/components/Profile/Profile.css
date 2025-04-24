@@ -130,7 +130,6 @@
   font-size: 1.1rem;
 }
 
-/* Form section */
 .card {
   border-radius: 16px;
   border: none;
@@ -199,7 +198,6 @@
   margin-top: 0.3rem;
 }
 
-/* Buttons */
 .btn-primary {
   background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
   border: none;
@@ -241,7 +239,6 @@
   border-radius: inherit;
 }
 
-/* Alerts */
 .alert {
   border-radius: 10px;
   padding: 1rem 1.25rem;
@@ -264,7 +261,6 @@
   opacity: 0.8;
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -276,7 +272,6 @@
   100% { opacity: 0.6; }
 }
 
-/* Loading spinner */
 .spinner-border {
   width: 1.2rem;
   height: 1.2rem;
