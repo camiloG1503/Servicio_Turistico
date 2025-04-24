@@ -11,21 +11,19 @@
     margin-top: 20px;
   }
   
-  /* Estilos responsivos - en pantallas pequeñas mostrar 1 columna */
   @media (max-width: 576px) {
     .resenas-grid {
       grid-template-columns: 1fr;
     }
   }
   
-  /* En pantallas medianas mostrar 2 columnas */
+
   @media (min-width: 577px) and (max-width: 768px) {
     .resenas-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   
-  /* En pantallas grandes mostrar 4 columnas */
   @media (min-width: 769px) {
     .resenas-grid {
       grid-template-columns: repeat(4, 1fr);
