@@ -32,7 +32,7 @@ const App = () => (
   <Router>
     <Layout>
       <Routes>
-        {/* 🟢 Públicas */}
+        {/* Públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/destinos" element={<Destinos />} />
         <Route path="/destinos/:id" element={<DestinoDetalle />} />
@@ -42,20 +42,20 @@ const App = () => (
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/informacion" element={<Informacion />} />
 
-        {/* 🔐 Autenticación */}
+        {/* Autenticación */}
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
 
-        {/* 🙋‍♂️ Usuario autenticado */}
+        {/* Usuario autenticado */}
         <Route path="/reservas" element={<Reservas />} />
         <Route path="/pagos" element={<Pagos />} />
         <Route path="/perfil" element={<Profile />} />
 
-        {/* 🔧 Administración */}
+        {/* Administración */}
         <Route path="/panelAdmin" element={<PanelAdmin />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
-        {/* 👩‍🏫 Panel de guías */}
+        {/* Panel de guías */}
         <Route path="/panelGuia" element={<PanelGuia />} />
         
         {/* Manejo de rutas no encontradas */}
