@@ -1,4 +1,3 @@
-// src/components/Guias/GuiaCard.jsx
 import { Link } from "react-router-dom";
 import "./GuiaCard.css";
 
