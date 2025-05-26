@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import ResenaItem from "./ResenaItem";
 import FormResena from "./FormResena";
+import api from "../../api/api";
 
 const ListaResenas = () => {
   const { usuario } = useAuth();
@@ -18,18 +19,19 @@ const ListaResenas = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch("http://localhost:5000/api/resenas");
-      
-      if (!res.ok) {
-        throw new Error(`Error ${res.status}: ${res.statusText}`);
-      }
-      
-      const data = await res.json();
+
+      const response = await api.get("/resenas");
+      const data = response.data;
+
       setResenas(data);
       setFilteredResenas(sortResenas(data, sortOrder));
     } catch (err) {
       console.error("Error al cargar reseñas:", err);
-      setError(err.message);
+      const errorMessage = err.response?.data?.mensaje || 
+                          err.response?.data?.error || 
+                          err.message || 
+                          "Error al cargar reseñas";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -37,24 +39,17 @@ const ListaResenas = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar esta reseña?")) return;
-    
+
     try {
-      const res = await fetch(`http://localhost:5000/api/resenas/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "No se pudo eliminar la reseña");
-      }
-
+      await api.delete(`/resenas/${id}`);
       fetchResenas();
     } catch (err) {
       console.error("Error al eliminar:", err);
-      alert(err.message);
+      const errorMessage = err.response?.data?.mensaje || 
+                          err.response?.data?.error || 
+                          err.message || 
+                          "No se pudo eliminar la reseña";
+      alert(errorMessage);
     }
   };
 
@@ -83,11 +78,11 @@ const ListaResenas = () => {
       const matchesSearch = 
         resena.usuario.toLowerCase().includes(searchTerm.toLowerCase()) ||
         resena.comentario.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       const matchesCalificacion = 
         filtroCalificacion === "todas" || 
         resena.calificacion.toString() === filtroCalificacion;
-      
+
       return matchesSearch && matchesCalificacion;
     });
 
@@ -153,7 +148,7 @@ const ListaResenas = () => {
                 />
               </div>
             </div>
-            
+
             <div className="col-md-3">
               <select
                 className="form-select"
@@ -168,7 +163,7 @@ const ListaResenas = () => {
                 <option value="1">⭐ 1 estrella</option>
               </select>
             </div>
-            
+
             <div className="col-md-3">
               <button
                 className={`btn w-100 ${sortOrder ? 'btn-primary' : 'btn-outline-primary'}`}

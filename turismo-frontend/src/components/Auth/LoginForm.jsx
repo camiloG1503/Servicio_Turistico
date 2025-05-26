@@ -3,6 +3,7 @@ import AuthForm from "./AuthForm";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "./PasswordInput";
+import api from "../../api/api";
 
 
 const LoginForm = () => {
@@ -18,20 +19,21 @@ const LoginForm = () => {
     setError("");
 
     try {
-        const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        const response = await api.post("/usuarios/login", { 
+            email, 
+            password 
         });
 
-        const data = await response.json();
+        const data = response.data;
 
-        if (!response.ok) throw new Error(data.error);
+        // Asumiendo que el backend devuelve un token en la respuesta
+        const token = data.token || data.accessToken || data.access_token;
 
-        login(data.usuario);
+        login(data.usuario, token);
         navigate("/");
     } catch (err) {
-        setError(err.message);
+        console.error("Error de login:", err);
+        setError(err.response?.data?.error || "Error al iniciar sesión");
     }
     };
 

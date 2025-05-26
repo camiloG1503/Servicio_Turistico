@@ -100,7 +100,7 @@ const DetalleGuiaCard = ({ guia }) => {
           <div className="seccion-info">
             <div className="seccion-header">
               <i className="bi bi-person-badge-fill"></i>
-              <h3>Acerca de {guia.nombre.split(' ')[0]}</h3>
+              <h3>Acerca de {(guia.nombre || '').split(' ')[0]}</h3>
             </div>
             <p>{guia.biografia || guia.experiencia}</p>
           </div>
@@ -111,7 +111,7 @@ const DetalleGuiaCard = ({ guia }) => {
               <h3>Idiomas</h3>
             </div>
             <div className="idiomas-container">
-              {guia.idiomas.split(',').map((idioma, index) => (
+              {(guia.idiomas || '').split(',').map((idioma, index) => (
                 <span key={index} className="idioma-badge">
                   {idioma.trim()}
                 </span>

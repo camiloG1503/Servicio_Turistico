@@ -5,6 +5,7 @@ import DestinoForm from "../components/Admin/DestinoForm";
 import DestinosAdminList from "../components/Admin/DestinosAdminList";
 import ListaUsuariosAdmin from "../components/Admin/ListaUsuariosAdmin";
 import "../components/Admin/AdminPanel.css";
+import api from "../api/api";
 
 const PanelAdmin = () => {
     const { usuario } = useAuth();
@@ -18,17 +19,16 @@ const PanelAdmin = () => {
         try {
             setLoadingDestinos(true);
             setErrorDestinos(null);
-            const res = await fetch("http://localhost:5000/api/destinos");
-            
-            if (!res.ok) {
-                throw new Error(`Error ${res.status}: ${res.statusText}`);
-            }
-            
-            const data = await res.json();
-            setDestinos(data);
+
+            const response = await api.get("/destinos/");
+            setDestinos(response.data);
         } catch (err) {
             console.error("Error al cargar destinos:", err);
-            setErrorDestinos(err.message);
+            const errorMessage = err.response?.data?.mensaje || 
+                               err.response?.data?.error || 
+                               err.message || 
+                               "Error desconocido";
+            setErrorDestinos(errorMessage);
         } finally {
             setLoadingDestinos(false);
         }
@@ -38,10 +38,17 @@ const PanelAdmin = () => {
         if (tab === "destinos") {
             fetchDestinos();
         }
-        
+
         if (tab === "estadisticas") {
-            fetch("http://localhost:5000/api/dashboard")
-            .then((res) => res.json())
+            // Usar el cliente API para obtener estadísticas del dashboard
+            api.get("/admin/dashboard")
+                .then(response => {
+                    // Procesar los datos del dashboard si es necesario
+                    console.log("Datos del dashboard:", response.data);
+                })
+                .catch(error => {
+                    console.error("Error al cargar estadísticas:", error);
+                });
         }
     }, [tab]);
 

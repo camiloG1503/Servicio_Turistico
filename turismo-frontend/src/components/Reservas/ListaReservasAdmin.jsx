@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/api";
 
 const ListaReservasAdmin = () => {
     const [reservas, setReservas] = useState([]);
@@ -14,9 +15,8 @@ const ListaReservasAdmin = () => {
         const fetchReservas = async () => {
             try {
                 setLoading(true);
-                const res = await fetch("http://localhost:5000/api/reservas");
-                if (!res.ok) throw new Error("Error al cargar reservas");
-                const data = await res.json();
+                const response = await api.get("/reservas/admin/reservas-usuarios");
+                const data = response.data;
                 setReservas(data);
                 const sortedData = [...data].sort((a, b) => 
                     new Date(b.fecha_reserva) - new Date(a.fecha_reserva)
@@ -24,7 +24,7 @@ const ListaReservasAdmin = () => {
                 setFilteredReservas(sortedData);
             } catch (error) {
                 console.error("Error fetching reservas:", error);
-                alert("Error al cargar reservas. Intente nuevamente.");
+                alert(error.response?.data?.error || "Error al cargar reservas. Intente nuevamente.");
             } finally {
                 setLoading(false);
             }
@@ -34,15 +34,15 @@ const ListaReservasAdmin = () => {
 
     useEffect(() => {
         let result = reservas.filter(reserva => {
-            const matchesSearch = 
-                reserva.nombre_usuario.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                reserva.nombre_destino.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            const matchesSearch =
+                (reserva.nombre_usuario?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+                (reserva.destino?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
                 new Date(reserva.fecha_reserva).toLocaleDateString('es-ES').includes(searchTerm);
-            
-            const matchesEstado = 
-                filtroEstado === "todos" || 
-                reserva.estado.toLowerCase() === filtroEstado.toLowerCase();
-            
+
+            const matchesEstado =
+                filtroEstado === "todos" ||
+                (reserva.estado?.toLowerCase() || "") === filtroEstado.toLowerCase();
+
             return matchesSearch && matchesEstado;
         });
 
@@ -159,13 +159,23 @@ const ListaReservasAdmin = () => {
                                             <td>
                                                 <div className="d-flex align-items-center">
                                                     <i className="bi bi-person-circle me-2 text-muted"></i>
-                                                    <span className="text-dark">{reserva.nombre_usuario}</span>
+                                                    <span className="text-dark">
+                                                        <span className="badge bg-info text-dark me-2">
+                                                            {reserva.id_usuario}
+                                                        </span>
+                                                        {reserva.nombre_usuario}
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div className="d-flex align-items-center">
                                                     <i className="bi bi-geo-alt me-2 text-muted"></i>
-                                                    <span className="text-dark">{reserva.nombre_destino}</span>
+                                                    <span className="text-dark">
+                                                        <span className="badge bg-success text-white me-2">
+                                                            {reserva.id_destino}
+                                                        </span>
+                                                        {reserva.destino}
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td>

@@ -41,7 +41,7 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/destinos">Destinos</Link>
             </li>
-            
+
             {usuario && usuario.rol !== "guia" && (
               <>
                 <li className="nav-item">
@@ -49,14 +49,16 @@ const Navbar = () => {
                     {usuario.rol === "admin" ? "Reservas" : "Mis Reservas"}
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/pagos">
-                    {usuario.rol === "admin" ? "Pagos" : "Mis Pagos"}
-                  </Link>
-                </li>
+                {(usuario.rol === "admin" || usuario.rol === "turista") && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/pagos">
+                      {usuario.rol === "admin" ? "Pagos" : "Mis Pagos"}
+                    </Link>
+                  </li>
+                )}
               </>
             )}
-            
+
             <li className="nav-item">
               <Link className="nav-link" to="/guias">Guías</Link>
             </li>
@@ -102,7 +104,7 @@ const Navbar = () => {
                         <i className="bi bi-person-gear me-2"></i> Mi Perfil
                       </Link>
                     </li>
-                    
+
                     {usuario.rol === "admin" && (
                       <>
                         <li>
@@ -117,7 +119,7 @@ const Navbar = () => {
                         </li>
                       </>
                     )}
-                    
+
                     {usuario.rol === "guia" && (
                       <li>
                         <Link className="dropdown-item" to="/panelGuia">
@@ -125,7 +127,7 @@ const Navbar = () => {
                         </Link>
                       </li>
                     )}
-                    
+
                     <li><hr className="dropdown-divider" /></li>
                     <li>
                       <button className="dropdown-item" onClick={handleLogout}>

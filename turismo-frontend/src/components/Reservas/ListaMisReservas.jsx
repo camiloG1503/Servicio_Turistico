@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
+import api from "../../api/api";
 
 const ListaMisReservas = ({ id_usuario }) => {
     const [reservas, setReservas] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-    fetch("http://localhost:5000/api/reservas")
-        .then(res => res.json())
-        .then(data => {
-        const propias = data.filter(r => r.id_usuario === id_usuario);
-        setReservas(propias);
-        setLoading(false);
-        })
-        .catch(() => setLoading(false));
+        const fetchReservas = async () => {
+            try {
+                const response = await api.get("/reservas/mis-reservas");
+                const data = response.data;
+                // No need to filter by id_usuario as the backend should return only the user's reservations
+                setReservas(data);
+            } catch (error) {
+                console.error("Error al cargar reservas:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchReservas();
     }, [id_usuario]);
 
     if (loading) return <p>Cargando tus reservas...</p>;
@@ -33,7 +40,17 @@ const ListaMisReservas = ({ id_usuario }) => {
         <tbody>
             {reservas.map((r) => (
             <tr key={r.id_reserva}>
-                <td>{r.nombre_destino}</td>
+                <td>
+                  <div className="d-flex align-items-center">
+                    <i className="bi bi-geo-alt me-2 text-muted"></i>
+                    <span>
+                      <span className="badge bg-success text-white me-2">
+                        {r.id_destino}
+                      </span>
+                      {r.destino || 'Sin destino'}
+                    </span>
+                  </div>
+                </td>
                 <td>{new Date(r.fecha_reserva).toLocaleDateString()}</td>
                 <td>{r.cantidad_personas}</td>
                 <td>

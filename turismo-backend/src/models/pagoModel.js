@@ -3,10 +3,24 @@ import db from "../config/db.js";
 class PagoModel {
   static async getAll() {
     const [rows] = await db.query(`
-      SELECT p.*, r.id_usuario, r.id_destino
+      SELECT p.*, r.id_usuario, r.id_destino, d.nombre as destino, u.nombre as usuario
       FROM pagos p
       JOIN reservas r ON p.id_reserva = r.id_reserva
+      JOIN destinos d ON r.id_destino = d.id_destino
+      JOIN usuarios u ON r.id_usuario = u.id_usuario
     `);
+    return rows;
+  }
+
+  static async getByUserId(userId) {
+    const [rows] = await db.query(`
+      SELECT p.*, r.id_usuario, r.id_destino, d.nombre as destino, u.nombre as usuario
+      FROM pagos p
+      JOIN reservas r ON p.id_reserva = r.id_reserva
+      JOIN destinos d ON r.id_destino = d.id_destino
+      JOIN usuarios u ON r.id_usuario = u.id_usuario
+      WHERE r.id_usuario = ?
+    `, [userId]);
     return rows;
   }
 

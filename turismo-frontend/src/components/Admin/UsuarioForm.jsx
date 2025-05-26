@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
+import api from "../../api/api";
 
 const UsuarioForm = ({ initialData, onSuccess }) => {
   const [form, setForm] = useState({
     nombre: "",
     email: "",
     rol: "turista",
-    contraseña: "",
+    password: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (initialData) {
-      setForm({ ...initialData, contraseña: "" });
+      setForm({ ...initialData, password: "" });
     }
   }, [initialData]);
 
@@ -27,10 +28,6 @@ const UsuarioForm = ({ initialData, onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const method = initialData ? "PUT" : "POST";
-    const endpoint = initialData
-      ? `http://localhost:5000/api/usuarios/${initialData.id_usuario}`
-      : "http://localhost:5000/api/usuarios";
 
     const payload = { ...form };
 
@@ -40,34 +37,41 @@ const UsuarioForm = ({ initialData, onSuccess }) => {
       return;
     }
 
-    if (initialData && !payload.contraseña?.trim()) {
-      delete payload.contraseña;
-    } else if (!payload.contraseña?.trim()) {
+    if (initialData && !payload.password?.trim()) {
+      delete payload.password;
+    } else if (!payload.password?.trim()) {
       alert("La contraseña es obligatoria");
       return;
     }
 
     try {
-      const res = await fetch(endpoint, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      let response;
 
-      if (res.ok) {
-        const message = initialData
-          ? "Usuario actualizado exitosamente"
-          : "Usuario creado exitosamente";
-        alert(message);
-        setForm({ nombre: "", email: "", contraseña: "", rol: "turista" });
-        onSuccess();
+      if (initialData) {
+        // Actualizar usuario existente
+        response = await api.put(`/usuarios/${initialData.id_usuario}`, payload);
       } else {
-        const error = await res.json();
-        alert("Error al guardar usuario: " + (error.error || "desconocido"));
+        // Crear nuevo usuario
+        response = await api.post('/usuarios/register', payload);
       }
-    } catch (err) {
-      console.error("Error al enviar formulario:", err);
-      alert("Error en la conexión con el servidor");
+
+      const message = initialData
+        ? "Usuario actualizado exitosamente"
+        : "Usuario creado exitosamente";
+
+      alert(message);
+      setForm({ nombre: "", email: "", password: "", rol: "turista" });
+      onSuccess();
+    } catch (error) {
+      console.error("Error al guardar usuario:", error);
+
+      // Mostrar mensaje de error más detallado
+      const errorMessage = error.response?.data?.mensaje || 
+                          error.response?.data?.error || 
+                          error.message || 
+                          "Error desconocido";
+
+      alert("Error al guardar usuario: " + errorMessage);
     }
   };
 
@@ -77,7 +81,7 @@ const UsuarioForm = ({ initialData, onSuccess }) => {
         <i className="bi bi-person-plus"></i>
         {initialData ? "Editar Usuario" : "Nuevo Usuario"}
       </h5>
-      
+
       <div className="form-group input-icon">
         <i className="bi bi-person"></i>
         <input
@@ -89,7 +93,7 @@ const UsuarioForm = ({ initialData, onSuccess }) => {
           required
         />
       </div>
-      
+
       <div className="form-group input-icon">
         <i className="bi bi-envelope"></i>
         <input
@@ -102,14 +106,14 @@ const UsuarioForm = ({ initialData, onSuccess }) => {
           required
         />
       </div>
-      
+
       <div className="form-group">
         <div className="input-icon">
           <i className="bi bi-lock"></i>
           <input
-            name="contraseña"
+            name="password"
             type={showPassword ? "text" : "password"}
-            value={form.contraseña}
+            value={form.password}
             onChange={handleChange}
             className="form-control"
             placeholder="Contraseña"
@@ -125,7 +129,7 @@ const UsuarioForm = ({ initialData, onSuccess }) => {
           </button>
         </div>
       </div>
-      
+
       <div className="form-group input-icon">
         <i className="bi bi-person-badge"></i>
         <select
@@ -140,7 +144,7 @@ const UsuarioForm = ({ initialData, onSuccess }) => {
           <option value="guia">Guía turístico</option>
         </select>
       </div>
-      
+
       <button className="btn btn-primary" type="submit">
         <i className={initialData ? "bi bi-arrow-repeat" : "bi bi-save"}></i>
         {initialData ? "Actualizar Usuario" : "Crear Usuario"}

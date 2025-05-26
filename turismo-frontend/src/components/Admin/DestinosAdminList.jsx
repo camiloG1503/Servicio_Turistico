@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DestinoForm from "./DestinoForm";
+import api from "../../api/api";
 
 const DestinosAdminList = ({ onEdit }) => {
   const [destinos, setDestinos] = useState([]);
@@ -10,17 +11,11 @@ const DestinosAdminList = ({ onEdit }) => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch("/api/destinos");
-      
-      if (!res.ok) {
-        throw new Error(`Error ${res.status}: ${res.statusText}`);
-      }
-      
-      const data = await res.json();
-      setDestinos(data);
+      const response = await api.get("/destinos/");
+      setDestinos(response.data);
     } catch (err) {
       console.error("Error al cargar destinos:", err);
-      setError(err.message);
+      setError(err.response?.data?.error || err.message);
     } finally {
       setLoading(false);
     }
@@ -28,21 +23,13 @@ const DestinosAdminList = ({ onEdit }) => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Está Seguro de eliminar este destino?")) return;
-    
+
     try {
-      const res = await fetch(`/api/destinos/${id}`, { 
-        method: "DELETE" 
-      });
-      
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Error al eliminar");
-      }
-      
+      await api.delete(`/destinos/${id}`);
       setDestinos(destinos.filter(d => d.id_destino !== id));
     } catch (error) {
       console.error("Error al eliminar:", error);
-      alert(error.message);
+      alert(error.response?.data?.error || error.message || "Error al eliminar");
     }
   };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import api from "../../api/api";
 
 const ListaReservasGuia = () => {
   const { usuario } = useAuth();
@@ -19,30 +20,25 @@ const ListaReservasGuia = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const [resReservas, resGuias] = await Promise.all([
-        fetch("http://localhost:5000/api/reservas"),
-        fetch("http://localhost:5000/api/guias")
+        api.get("/reservas/"),
+        api.get("/guias/")
       ]);
-      
-      if (!resReservas.ok) throw new Error("Error al cargar reservas");
-      if (!resGuias.ok) throw new Error("Error al cargar guías");
-      
-      const [dataReservas, dataGuias] = await Promise.all([
-        resReservas.json(),
-        resGuias.json()
-      ]);
-      
+
+      const dataReservas = resReservas.data;
+      const dataGuias = resGuias.data;
+
       setReservas(dataReservas.map(reserva => ({
         ...reserva,
         nombre_guia: dataGuias.find(g => g.id_guia === reserva.id_guia)?.nombre
       })));
-      
+
       setReservasFiltradas(dataReservas.map(reserva => ({
         ...reserva,
         nombre_guia: dataGuias.find(g => g.id_guia === reserva.id_guia)?.nombre
       })));
-      
+
       setGuias(dataGuias);
     } catch (error) {
       setError(error.message);
@@ -62,31 +58,31 @@ const ListaReservasGuia = () => {
 
   const aplicarFiltros = () => {
     let resultado = [...reservas];
-    
+
     if (filtros.turista) {
       resultado = resultado.filter(reserva => 
-        reserva.nombre_usuario.toLowerCase().includes(filtros.turista.toLowerCase())
+        reserva.usuario?.toLowerCase().includes(filtros.turista.toLowerCase())
       );
     }
-    
+
     if (filtros.destino) {
       resultado = resultado.filter(reserva => 
-        reserva.nombre_destino.toLowerCase().includes(filtros.destino.toLowerCase())
+        reserva.destino?.toLowerCase().includes(filtros.destino.toLowerCase())
       );
     }
-    
+
     if (filtros.fecha) {
       resultado = resultado.filter(reserva => 
         reserva.fecha_reserva.includes(filtros.fecha)
       );
     }
-    
+
     if (filtros.estado) {
       resultado = resultado.filter(reserva => 
         reserva.estado.toLowerCase() === filtros.estado.toLowerCase()
       );
     }
-    
+
     setReservasFiltradas(resultado);
   };
 
@@ -105,23 +101,12 @@ const ListaReservasGuia = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/reservas/${idReserva}/asignar`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id_guia: usuario.id_usuario,
-          estado: 'confirmada'
-        })
+      const response = await api.put(`/reservas/${idReserva}`, {
+        id_guia: usuario.id_usuario,
+        estado: 'confirmada'
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Error al asignar la reserva');
-      }
-
-      await response.json();
+      const data = response.data;
 
       const guiaAsignado = guias.find(g => g.id_guia === usuario.id_usuario);
       const actualizarReservas = (prevReservas) => 
@@ -256,6 +241,7 @@ const ListaReservasGuia = () => {
             <table className="table table-hover mb-0">
               <thead className="table-light">
                 <tr>
+                  <th>ID</th>
                   <th>Turista</th>
                   <th>Destino</th>
                   <th>Fecha</th>
@@ -269,8 +255,28 @@ const ListaReservasGuia = () => {
                 {reservasFiltradas.length > 0 ? (
                   reservasFiltradas.map((reserva) => (
                     <tr key={reserva.id_reserva}>
-                      <td>{reserva.nombre_usuario}</td>
-                      <td>{reserva.nombre_destino}</td>
+                      <td>
+                        <span className="badge bg-info text-dark">
+                          {reserva.id_usuario}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="d-flex align-items-center">
+                          <i className="bi bi-person me-2 text-muted"></i>
+                          <span>{reserva.usuario || 'Sin nombre'}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="d-flex align-items-center">
+                          <i className="bi bi-geo-alt me-2 text-muted"></i>
+                          <span>
+                            <span className="badge bg-success text-white me-2">
+                              {reserva.id_destino}
+                            </span>
+                            {reserva.destino || 'Sin destino'}
+                          </span>
+                        </div>
+                      </td>
                       <td>
                         {new Date(reserva.fecha_reserva).toLocaleDateString('es-ES', {
                           day: '2-digit',
@@ -295,7 +301,10 @@ const ListaReservasGuia = () => {
                       <td>
                         {reserva.estado === 'confirmada' ? (
                           reserva.nombre_guia ? (
-                            <span className="text-primary fw-bold">{reserva.nombre_guia}</span>
+                            <div className="d-flex align-items-center">
+                              <i className="bi bi-person-badge me-2 text-primary"></i>
+                              <span className="text-primary fw-bold">{reserva.nombre_guia}</span>
+                            </div>
                           ) : (
                             <span className="text-muted">Asignado (sin nombre)</span>
                           )
@@ -310,7 +319,7 @@ const ListaReservasGuia = () => {
                       </td>
                       <td>
                         {reserva.estado === 'pendiente' && (
-                          <button 
+                          <button
                             className="btn btn-sm btn-primary"
                             onClick={() => handleTomarReserva(reserva.id_reserva)}
                             disabled={!usuario || usuario.rol !== 'guia'}
@@ -320,12 +329,21 @@ const ListaReservasGuia = () => {
                             Tomar Reserva
                           </button>
                         )}
+                        {reserva.estado === 'confirmada' && (
+                          <button
+                            className="btn btn-sm btn-outline-success"
+                            title="Ver detalles"
+                          >
+                            <i className="bi bi-info-circle me-1"></i>
+                            Detalles
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" className="text-center py-4">
+                    <td colSpan="8" className="text-center py-4">
                       <div className="alert alert-info mb-0">
                         <i className="bi bi-info-circle-fill me-2"></i>
                         No se encontraron reservas con los filtros aplicados

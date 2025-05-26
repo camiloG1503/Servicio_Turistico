@@ -5,6 +5,8 @@ import "./ResumenEstadisticas.css";
 const ResumenEstadisticas = ({ stats }) => {
     const [activeTab, setActiveTab] = useState(null);
 
+    const safeLength = (arr) => Array.isArray(arr) ? arr.length : 0;
+
     const handleCardClick = (tab) => {
         setActiveTab(activeTab === tab ? null : tab);
     };
@@ -15,52 +17,52 @@ const ResumenEstadisticas = ({ stats }) => {
                 <h2 className="dashboard-title">Panel de Estadísticas</h2>
                 <p className="dashboard-subtitle">Resumen general de la plataforma</p>
             </div>
-            
+
             <div className="dashboard-grid">
-                <StatCard 
-                    title="Usuarios registrados" 
-                    value={stats?.usuarios?.length ?? 0} 
-                    icon="bi-people-fill" 
+                <StatCard
+                    title="Usuarios registrados"
+                    value={safeLength(stats?.usuarios)}
+                    icon="bi-people-fill"
                     color="primary"
                     onClick={() => handleCardClick('usuarios')}
                     active={activeTab === 'usuarios'}
                 />
-                <StatCard 
-                    title="Destinos turísticos" 
-                    value={stats?.destinos?.length ?? 0} 
-                    icon="bi-geo-alt-fill" 
+                <StatCard
+                    title="Destinos turísticos"
+                    value={safeLength(stats?.destinos)}
+                    icon="bi-geo-alt-fill"
                     color="success"
                     onClick={() => handleCardClick('destinos')}
                     active={activeTab === 'destinos'}
                 />
-                <StatCard 
-                    title="Reservas realizadas" 
-                    value={stats?.reservas?.length ?? 0} 
-                    icon="bi-calendar-check-fill" 
+                <StatCard
+                    title="Reservas realizadas"
+                    value={safeLength(stats?.reservas)}
+                    icon="bi-calendar-check-fill"
                     color="danger"
                     onClick={() => handleCardClick('reservas')}
                     active={activeTab === 'reservas'}
                 />
-                <StatCard 
-                    title="Pagos realizados" 
-                    value={stats?.pagos?.length ?? 0} 
-                    icon="bi-cash-coin" 
+                <StatCard
+                    title="Pagos realizados"
+                    value={safeLength(stats?.pagos)}
+                    icon="bi-cash-coin"
                     color="dark"
                     onClick={() => handleCardClick('pagos')}
                     active={activeTab === 'pagos'}
                 />
-                <StatCard 
-                    title="Guías activos" 
-                    value={stats?.guias?.length ?? 0} 
-                    icon="bi-person-badge-fill" 
+                <StatCard
+                    title="Guías activos"
+                    value={safeLength(stats?.guias)}
+                    icon="bi-person-badge-fill"
                     color="info"
                     onClick={() => handleCardClick('guias')}
                     active={activeTab === 'guias'}
                 />
                 <StatCard
-                    title="Reseñas recibidas" 
-                    value={stats?.resenas?.length ?? 0} 
-                    icon="bi-star-fill" 
+                    title="Reseñas recibidas"
+                    value={safeLength(stats?.resenas)}
+                    icon="bi-star-fill"
                     color="warning"
                     onClick={() => handleCardClick('reseñas')}
                     active={activeTab === 'reseñas'}
@@ -90,29 +92,35 @@ const DetailsPanel = ({ tab, stats, onClose }) => {
     };
 
     const renderTable = () => {
+        const data = stats?.[tab] || [];
+
+        if (!Array.isArray(data) || data.length === 0) {
+            return <p className="text-center py-3">No hay datos disponibles</p>;
+        }
+
         switch(tab) {
             case 'usuarios':
                 return (
                     <table className="table">
                         <thead>
-                            <tr>
-                                <th><i className="bi bi-person-fill me-2"></i>Nombre</th>
-                                <th><i className="bi bi-envelope-fill me-2"></i>Email</th>
-                                <th><i className="bi bi-person-rolodex me-2"></i>Rol</th>
-                            </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {stats.usuarios.map((u, i) => (
-                                <tr key={i}>
-                                    <td>{u.nombre}</td>
-                                    <td>{u.email}</td>
-                                    <td>
+                        {data.map((u, i) => (
+                            <tr key={i}>
+                                <td>{u.nombre}</td>
+                                <td>{u.email}</td>
+                                <td>
                                         <span className={`badge bg-${u.rol === 'admin' ? 'danger' : u.rol === 'guia' ? 'info' : 'primary'}`}>
                                             {u.rol}
                                         </span>
-                                    </td>
-                                </tr>
-                            ))}
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 );
@@ -120,20 +128,20 @@ const DetailsPanel = ({ tab, stats, onClose }) => {
                 return (
                     <table className="table">
                         <thead>
-                            <tr>
-                                <th><i className="bi bi-geo-alt-fill me-2"></i>Nombre</th>
-                                <th><i className="bi bi-pin-map-fill me-2"></i>Ubicación</th>
-                                <th><i className="bi bi-currency-dollar me-2"></i>Precio</th>
-                            </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Ubicación</th>
+                            <th>Precio</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {stats.destinos.map((d, i) => (
-                                <tr key={i}>
-                                    <td>{d.nombre}</td>
-                                    <td>{d.ubicacion}</td>
-                                    <td className="fw-bold">${Number(d.precio).toLocaleString("es-CO")}</td>
-                                </tr>
-                            ))}
+                        {data.map((d, i) => (
+                            <tr key={i}>
+                                <td>{d.nombre}</td>
+                                <td>{d.ubicacion}</td>
+                                <td className="fw-bold">${Number(d.precio).toLocaleString("es-CO")}</td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 );
@@ -141,25 +149,24 @@ const DetailsPanel = ({ tab, stats, onClose }) => {
                 return (
                     <table className="table">
                         <thead>
-                            <tr>
-                                <th><i className="bi bi-person-fill me-2"></i>Usuario</th>
-                                <th><i className="bi bi-geo-alt-fill me-2"></i>Destino</th>
-                                <th><i className="bi bi-calendar-event me-2"></i>Fecha</th>
-                            </tr>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Destino</th>
+                            <th>Fecha</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {stats.reservas.map((r, i) => (
-                                <tr key={i}>
-                                    <td>{r.usuario}</td>
-                                    <td>{r.destino}</td>
-                                    <td>
+                        {data.map((r, i) => (
+                            <tr key={i}>
+                                <td>{r.usuario}</td>
+                                <td>{r.destino}</td>
+                                <td>
                                         <span className="badge bg-light text-dark">
-                                            <i className="bi bi-calendar-check me-1"></i>
                                             {r.fecha_reserva?.split('T')[0]}
                                         </span>
-                                    </td>
-                                </tr>
-                            ))}
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 );
@@ -167,32 +174,28 @@ const DetailsPanel = ({ tab, stats, onClose }) => {
                 return (
                     <table className="table">
                         <thead>
-                            <tr>
-                                <th><i className="bi bi-cash-stack me-2"></i>Monto</th>
-                                <th><i className="bi bi-credit-card me-2"></i>Método</th>
-                                <th><i className="bi bi-check-circle-fill me-2"></i>Estado</th>
-                                <th><i className="bi bi-person-fill me-2"></i>Usuario</th>
-                                <th><i className="bi bi-geo-alt-fill me-2"></i>Destino</th>
-                            </tr>
+                        <tr>
+                            <th>Monto</th>
+                            <th>Método</th>
+                            <th>Estado</th>
+                            <th>Usuario</th>
+                            <th>Destino</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {stats.pagos.map((p, i) => (
-                                <tr key={i}>
-                                    <td className="fw-bold">${Number(p.monto).toLocaleString("es-CO")}</td>
-                                    <td>
-                                        <span className="badge bg-secondary">
-                                            {p.metodo_pago}
-                                        </span>
-                                    </td>
-                                    <td>
+                        {data.map((p, i) => (
+                            <tr key={i}>
+                                <td className="fw-bold">${Number(p.monto).toLocaleString("es-CO")}</td>
+                                <td><span className="badge bg-secondary">{p.metodo_pago}</span></td>
+                                <td>
                                         <span className={`badge bg-${p.estado_pago === 'completado' ? 'success' : 'warning'}`}>
                                             {p.estado_pago}
                                         </span>
-                                    </td>
-                                    <td>{p.usuario}</td>
-                                    <td>{p.destino}</td>
-                                </tr>
-                            ))}
+                                </td>
+                                <td>{p.usuario}</td>
+                                <td>{p.destino}</td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 );
@@ -200,26 +203,26 @@ const DetailsPanel = ({ tab, stats, onClose }) => {
                 return (
                     <table className="table">
                         <thead>
-                            <tr>
-                                <th><i className="bi bi-person-badge-fill me-2"></i>Nombre</th>
-                                <th><i className="bi bi-envelope-fill me-2"></i>Email</th>
-                                <th><i className="bi bi-translate me-2"></i>Idiomas</th>
-                            </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Idiomas</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {stats.guias.map((g, i) => (
-                                <tr key={i}>
-                                    <td>{g.nombre}</td>
-                                    <td>{g.email}</td>
-                                    <td>
-                                        {g.idiomas.split(',').map((idioma, idx) => (
-                                            <span key={idx} className="badge bg-info me-1">
+                        {data.map((g, i) => (
+                            <tr key={i}>
+                                <td>{g.nombre}</td>
+                                <td>{g.email}</td>
+                                <td>
+                                    {g.idiomas?.split(',').map((idioma, idx) => (
+                                        <span key={idx} className="badge bg-info me-1">
                                                 {idioma.trim()}
                                             </span>
-                                        ))}
-                                    </td>
-                                </tr>
-                            ))}
+                                    )) || <span className="badge bg-secondary">Sin idiomas</span>}
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 );
@@ -227,37 +230,31 @@ const DetailsPanel = ({ tab, stats, onClose }) => {
                 return (
                     <table className="table">
                         <thead>
-                            <tr>
-                                <th><i className="bi bi-star-fill me-2"></i>Calificación</th>
-                                <th><i className="bi bi-chat-left-text-fill me-2"></i>Comentario</th>
-                                <th><i className="bi bi-person-fill me-2"></i>Usuario</th>
-                                <th><i className="bi bi-geo-alt-fill me-2"></i>Destino</th>
-                            </tr>
+                        <tr>
+                            <th>Calificación</th>
+                            <th>Comentario</th>
+                            <th>Usuario</th>
+                            <th>Destino</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {stats.resenas.map((r, i) => (
-                                <tr key={i}>
-                                    <td>
-                                        <div className="star-rating">
-                                            {[...Array(5)].map((_, idx) => (
-                                                <i 
-                                                    key={idx} 
-                                                    className={`bi bi-star${idx < r.calificacion ? '-fill' : ''} ${idx < r.calificacion ? 'text-warning' : 'text-muted'}`}
-                                                ></i>
-                                            ))}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {r.comentario ? (
-                                            <div className="comment-truncate" title={r.comentario}>
-                                                {r.comentario.length > 50 ? `${r.comentario.substring(0, 50)}...` : r.comentario}
-                                            </div>
-                                        ) : 'Sin comentario'}
-                                    </td>
-                                    <td>{r.usuario}</td>
-                                    <td>{r.destino}</td>
-                                </tr>
-                            ))}
+                        {data.map((r, i) => (
+                            <tr key={i}>
+                                <td>
+                                    <div className="star-rating">
+                                        {[...Array(5)].map((_, idx) => (
+                                            <i
+                                                key={idx}
+                                                className={`bi bi-star${idx < r.calificacion ? '-fill' : ''} ${idx < r.calificacion ? 'text-warning' : 'text-muted'}`}
+                                            ></i>
+                                        ))}
+                                    </div>
+                                </td>
+                                <td>{r.comentario}</td>
+                                <td>{r.usuario}</td>
+                                <td>{r.destino}</td>
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 );
@@ -270,12 +267,14 @@ const DetailsPanel = ({ tab, stats, onClose }) => {
         <div className="details-panel">
             <div className="panel-header">
                 <h3 className="panel-title">
-                    <i className={`bi ${tab === 'usuarios' ? 'bi-people-fill' : 
-                                  tab === 'destinos' ? 'bi-geo-alt-fill' : 
-                                  tab === 'reservas' ? 'bi-calendar-check-fill' : 
-                                  tab === 'pagos' ? 'bi-cash-coin' : 
-                                  tab === 'guias' ? 'bi-person-badge-fill' : 
-                                  'bi-star-fill'} me-2`}></i>
+                    <i className={`bi ${
+                        tab === 'usuarios' ? 'bi-people-fill' :
+                            tab === 'destinos' ? 'bi-geo-alt-fill' :
+                                tab === 'reservas' ? 'bi-calendar-check-fill' :
+                                    tab === 'pagos' ? 'bi-cash-coin' :
+                                        tab === 'guias' ? 'bi-person-badge-fill' :
+                                            'bi-star-fill'} me-2`}>
+                    </i>
                     {getPanelTitle()}
                 </h3>
                 <button className="btn-close-panel" onClick={onClose}>

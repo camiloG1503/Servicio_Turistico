@@ -5,7 +5,13 @@ export const listarGuias = async (req, res) => {
     const guias = await GuiaModel.getAll();
     res.json(guias);
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al listar guías", error });
+    console.error("Error en listarGuias:", error.message, error.stack);
+
+    // Enviar una respuesta más amigable al cliente sin exponer detalles del error
+    res.status(500).json({ 
+      mensaje: "Error al obtener la lista de guías. Por favor, intente nuevamente más tarde.",
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
@@ -43,6 +49,12 @@ export const verUsuariosConReservas = async (req, res) => {
     const usuarios = await GuiaModel.getUsuariosConReservas();
     res.json(usuarios);
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al obtener turistas con reservas", error });
+    console.error("Error en verUsuariosConReservas:", error.message, error.stack);
+
+    // Enviar una respuesta más amigable al cliente sin exponer detalles del error
+    res.status(500).json({ 
+      mensaje: "Error al obtener la lista de turistas con reservas. Por favor, intente nuevamente más tarde.",
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };

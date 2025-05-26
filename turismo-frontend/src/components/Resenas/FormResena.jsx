@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import api from "../../api/api";
 
 const FormResena = ({ initialData = null, onSuccess, id_usuario }) => {
   const [form, setForm] = useState({
@@ -13,9 +14,8 @@ const FormResena = ({ initialData = null, onSuccess, id_usuario }) => {
   useEffect(() => {
     const fetchDestinos = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/destinos");
-        const data = await res.json();
-        setDestinos(data);
+        const response = await api.get("/destinos/");
+        setDestinos(response.data);
       } catch (error) {
         console.error("Error al cargar destinos:", error);
       } finally {
@@ -42,11 +42,6 @@ const FormResena = ({ initialData = null, onSuccess, id_usuario }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const method = initialData ? "PUT" : "POST";
-      const endpoint = initialData
-        ? `http://localhost:5000/api/resenas/${initialData.id_resena}`
-        : `http://localhost:5000/api/resenas`;
-
       const payload = {
         id_destino: parseInt(form.id_destino),
         calificacion: parseInt(form.calificacion),
@@ -54,22 +49,24 @@ const FormResena = ({ initialData = null, onSuccess, id_usuario }) => {
         id_usuario: initialData?.id_usuario || id_usuario
       };
 
-      const res = await fetch(endpoint, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Error al guardar reseña");
+      let response;
+      if (initialData) {
+        // Update existing review
+        response = await api.put(`/resenas/${initialData.id_resena}`, payload);
+      } else {
+        // Create new review
+        response = await api.post('/resenas', payload);
       }
 
       setForm({ id_destino: "", calificacion: 5, comentario: "" });
       onSuccess();
     } catch (error) {
       console.error("Error:", error);
-      alert(error.message);
+      const errorMessage = error.response?.data?.mensaje || 
+                          error.response?.data?.error || 
+                          error.message || 
+                          "Error al guardar reseña";
+      alert(errorMessage);
     }
   };
 

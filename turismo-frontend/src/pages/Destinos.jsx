@@ -5,6 +5,7 @@ import SectionWrapper from "../components/UI/SectionWrapper";
 import PageHeader from "../components/UI/PageHeader";
 import SpinnerCentered from "../components/UI/SpinnerCentered";
 import EmptyState from "../components/UI/EmptyState";
+import api from "../api/api";
 
 const Destinos = () => {
   const [destinos, setDestinos] = useState([]);
@@ -18,12 +19,13 @@ const Destinos = () => {
   useEffect(() => {
     const fetchDestinos = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/destinos");
-        const data = await response.json();
+        const response = await api.get("/destinos/");
+        const data = response.data;
         setDestinos(data);
         setFiltered(data);
       } catch (err) {
         console.error("Error al cargar los destinos:", err);
+        // Mostrar un mensaje de error al usuario si es necesario
       } finally {
         setLoading(false);
       }

@@ -30,6 +30,15 @@ class ResenaModel {
     const [result] = await db.query("DELETE FROM resenas WHERE id_resena = ?", [id]);
     return result;
   }
+
+  static async update(id, resena) {
+    const [result] = await db.query(
+      `UPDATE resenas SET id_destino = ?, calificacion = ?, comentario = ?
+       WHERE id_resena = ?`,
+      [resena.id_destino, resena.calificacion, resena.comentario, id]
+    );
+    return result;
+  }
 }
 
 export default ResenaModel;

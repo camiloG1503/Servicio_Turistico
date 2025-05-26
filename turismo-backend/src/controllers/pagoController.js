@@ -5,6 +5,18 @@ export const listarPagos = async (req, res) => {
   res.json(pagos);
 };
 
+export const listarMisPagos = async (req, res) => {
+  try {
+    // El id del usuario autenticado está disponible en req.usuario.id
+    const userId = req.usuario.id;
+    const pagos = await PagoModel.getByUserId(userId);
+    res.json(pagos);
+  } catch (error) {
+    console.error("Error al obtener pagos del usuario:", error);
+    res.status(500).json({ mensaje: "Error al obtener tus pagos" });
+  }
+};
+
 export const obtenerPago = async (req, res) => {
   const pago = await PagoModel.getById(req.params.id);
   if (!pago) return res.status(404).json({ mensaje: "Pago no encontrado" });

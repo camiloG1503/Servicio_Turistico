@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import api from "../../api/api";
 
 const DestinoForm = ({ initialData, onSuccess }) => {
   const [form, setForm] = useState({
@@ -28,32 +29,35 @@ const DestinoForm = ({ initialData, onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const method = initialData ? "PUT" : "POST";
-    const endpoint = initialData
-      ? `/api/destinos/${initialData.id_destino}`
-      : "/api/destinos";
 
     try {
-      const response = await fetch(endpoint, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      let response;
 
-      if (response.ok) {
-        const message = initialData
-          ? "Destino actualizado exitosamente"
-          : "Destino creado exitosamente";
-        alert(message);
-        setForm({ nombre: "", ubicacion: "", descripcion: "", imagen: "", precio: "" });
-        onSuccess();
+      if (initialData) {
+        // Actualizar destino existente
+        response = await api.put(`/destinos/${initialData.id_destino}`, form);
       } else {
-        const errorData = await response.json();
-        alert(`Error al guardar el destino: ${errorData.error || "Desconocido"}`);
+        // Crear nuevo destino
+        response = await api.post('/destinos', form);
       }
+
+      const message = initialData
+        ? "Destino actualizado exitosamente"
+        : "Destino creado exitosamente";
+
+      alert(message);
+      setForm({ nombre: "", ubicacion: "", descripcion: "", imagen: "", precio: "" });
+      onSuccess();
     } catch (error) {
-      console.error("Error al enviar el formulario:", error);
-      alert("Error en la conexión con el servidor");
+      console.error("Error al guardar el destino:", error);
+
+      // Mostrar mensaje de error más detallado
+      const errorMessage = error.response?.data?.mensaje || 
+                          error.response?.data?.error || 
+                          error.message || 
+                          "Desconocido";
+
+      alert(`Error al guardar el destino: ${errorMessage}`);
     }
   };
 
@@ -70,7 +74,7 @@ const DestinoForm = ({ initialData, onSuccess }) => {
           required
         />
       </div>
-      
+
       <div className="form-group input-icon">
         <i className="bi bi-geo"></i>
         <input
@@ -82,7 +86,7 @@ const DestinoForm = ({ initialData, onSuccess }) => {
           required
         />
       </div>
-      
+
       <div className="form-group">
         <textarea
           name="descripcion"
@@ -94,7 +98,7 @@ const DestinoForm = ({ initialData, onSuccess }) => {
           required
         />
       </div>
-      
+
       <div className="form-group input-icon">
         <i className="bi bi-image"></i>
         <input
@@ -105,7 +109,7 @@ const DestinoForm = ({ initialData, onSuccess }) => {
           placeholder="URL de imagen (opcional)"
         />
       </div>
-      
+
       <div className="form-group input-icon">
         <i className="bi bi-currency-dollar"></i>
         <input
@@ -118,7 +122,7 @@ const DestinoForm = ({ initialData, onSuccess }) => {
           required
         />
       </div>
-      
+
       <button className="btn btn-primary" type="submit">
         <i className={initialData ? "bi bi-arrow-repeat" : "bi bi-plus-circle"}></i>
         {initialData ? "Actualizar" : "Crear"}

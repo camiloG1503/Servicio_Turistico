@@ -5,7 +5,7 @@ class GuiaModel {
     const [rows] = await db.query(`
       SELECT g.id_guia, u.nombre AS nombre_usuario, u.email, g.experiencia, g.idiomas, g.imagen, g.calificacion_promedio
       FROM guias g
-      JOIN usuarios u ON g.id_usuario = u.id_usuario
+      LEFT JOIN usuarios u ON g.id_usuario = u.id_usuario
     `);
     return rows;
   }
@@ -45,7 +45,7 @@ class GuiaModel {
     const [rows] = await db.query(`
       SELECT r.id_reserva, u.nombre AS turista, u.email, r.fecha_reserva, r.estado, r.cantidad_personas
       FROM reservas r
-      JOIN usuarios u ON r.id_usuario = u.id_usuario
+      LEFT JOIN usuarios u ON r.id_usuario = u.id_usuario
       ORDER BY r.fecha_reserva DESC
     `);
     return rows;

@@ -15,6 +15,7 @@ import Informacion from "./pages/Informacion";
 // Autenticación
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
 
 // Funcionalidades
 import Reservas from "./pages/Reservas";
@@ -48,7 +49,11 @@ const App = () => (
 
         {/* Usuario autenticado */}
         <Route path="/reservas" element={<Reservas />} />
-        <Route path="/pagos" element={<Pagos />} />
+        <Route path="/pagos" element={
+          <ProtectedRoute allowedRoles={["admin", "turista"]}>
+            <Pagos />
+          </ProtectedRoute>
+        } />
         <Route path="/perfil" element={<Profile />} />
 
         {/* Administración */}
@@ -57,7 +62,7 @@ const App = () => (
 
         {/* Panel de guías */}
         <Route path="/panelGuia" element={<PanelGuia />} />
-        
+
         {/* Manejo de rutas no encontradas */}
         <Route path="*" element={<Home />} />
       </Routes>

@@ -27,7 +27,7 @@ const DestinoCard = ({ destino }) => {
                     <div className="destino-image-container">
                         {destino.imagen && (
                             <img
-                                src={`/img/${destino.imagen}`}
+                                src={destino.imagen.startsWith('http') ? destino.imagen : `/img/${destino.imagen}`}
                                 alt={destino.nombre}
                                 loading="lazy"
                                 className="destino-image"

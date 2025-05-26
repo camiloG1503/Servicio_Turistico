@@ -73,13 +73,27 @@ const TablaPagos = ({ pagos, rol }) => {
                                     <td>
                                         <div className="d-flex align-items-center">
                                             <i className="bi bi-person-circle me-2 text-muted"></i>
-                                            {pago.usuario || 'N/A'}
+                                            {pago.usuario ? (
+                                                <span>
+                                                    <span className="badge bg-info text-dark me-2">
+                                                        {pago.id_usuario}
+                                                    </span>
+                                                    {pago.usuario}
+                                                </span>
+                                            ) : 'N/A'}
                                         </div>
                                     </td>
                                     <td>
                                         <div className="d-flex align-items-center">
                                             <i className="bi bi-geo-alt me-2 text-muted"></i>
-                                            {pago.destino || 'N/A'}
+                                            {pago.destino ? (
+                                                <span>
+                                                    <span className="badge bg-success text-white me-2">
+                                                        {pago.id_destino}
+                                                    </span>
+                                                    {pago.destino}
+                                                </span>
+                                            ) : 'N/A'}
                                         </div>
                                     </td>
                                     <td>
@@ -139,7 +153,7 @@ const TablaPagos = ({ pagos, rol }) => {
                 </div>
             </div>
 
-            <style jsx>{`
+            <style>{`
                 .bg-indigo {
                     background-color: #6f42c1;
                     color: white;

@@ -11,7 +11,7 @@ const GuiaList = () => {
   useEffect(() => {
     const fetchGuias = async () => {
       try {
-        const response = await fetch("/api/guias");
+        const response = await fetch("http://localhost:5000/api/guias/");
         if (!response.ok) throw new Error("Error al cargar los guías");
         const data = await response.json();
         setGuias(data);

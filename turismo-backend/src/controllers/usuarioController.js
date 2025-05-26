@@ -15,7 +15,8 @@ export const registrarUsuario = async (req, res) => {
 
     res.status(201).json({ mensaje: "Usuario registrado con éxito", id });
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al registrar usuario", error });
+    console.error("Error al registrar usuario:", error);
+    res.status(500).json({ mensaje: "Error al registrar usuario", error: error.message });
   }
 };
 
@@ -43,44 +44,77 @@ export const login = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al iniciar sesión", error });
+    console.error("Error al iniciar sesión:", error);
+    res.status(500).json({ mensaje: "Error al iniciar sesión", error: error.message });
   }
 };
 
 export const obtenerPerfil = (req, res) => {
-  const usuario = req.usuario;
+  try {
+    const usuario = req.usuario;
 
-  if (!usuario) {
-    return res.status(404).json({ mensaje: "Token inválido o ya expiró" });
+    if (!usuario) {
+      return res.status(404).json({ mensaje: "Token inválido o ya expiró" });
+    }
+
+    res.json({
+      id: usuario.id_usuario,
+      nombre: usuario.nombre,
+      email: usuario.email,
+      rol: usuario.rol,
+    });
+  } catch (error) {
+    console.error("Error al obtener perfil:", error);
+    res.status(500).json({ mensaje: "Error al obtener el perfil del usuario", error: error.message });
   }
-
-  res.json({
-    id: usuario.id_usuario,
-    nombre: usuario.nombre,
-    email: usuario.email,
-    rol: usuario.rol,
-  });
 };
 
 export const listarUsuarios = async (req, res) => {
-  const usuarios = await UsuarioModel.getAll();
-  res.json(usuarios);
+  try {
+    const usuarios = await UsuarioModel.getAll();
+    res.json(usuarios);
+  } catch (error) {
+    console.error("Error al listar usuarios:", error);
+    res.status(500).json({ mensaje: "Error al obtener la lista de usuarios", error: error.message });
+  }
 };
 
 export const obtenerUsuario = async (req, res) => {
-  const usuario = await UsuarioModel.getById(req.params.id);
-  if (!usuario) return res.status(404).json({ mensaje: "Usuario no encontrado" });
-  res.json(usuario);
+  try {
+    const usuario = await UsuarioModel.getById(req.params.id);
+    if (!usuario) return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    res.json(usuario);
+  } catch (error) {
+    console.error("Error al obtener usuario:", error);
+    res.status(500).json({ mensaje: "Error al obtener el usuario", error: error.message });
+  }
 };
 
 export const editarUsuario = async (req, res) => {
-  const { nombre, email, password, rol } = req.body;
-  const hash = await bcrypt.hash(password, 10);
-  await UsuarioModel.update(req.params.id, { nombre, email, password: hash, rol });
-  res.json({ mensaje: "Usuario actualizado" });
+  try {
+    const { nombre, email, password, rol } = req.body;
+    const userData = { nombre, email, rol };
+
+    // Solo actualizar la contraseña si se proporciona
+    if (password) {
+      const hash = await bcrypt.hash(password, 10);
+      userData.password = hash;
+    }
+
+    await UsuarioModel.update(req.params.id, userData);
+    res.json({ mensaje: "Usuario actualizado" });
+  } catch (error) {
+    console.error("Error al actualizar usuario:", error);
+    res.status(500).json({ mensaje: "Error al actualizar usuario", error: error.message });
+  }
 };
 
 export const borrarUsuario = async (req, res) => {
-  await UsuarioModel.delete(req.params.id);
-  res.json({ mensaje: "Usuario eliminado" });
+  try {
+    await UsuarioModel.delete(req.params.id);
+    res.json({ mensaje: "Usuario eliminado" });
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+    res.status(500).json({ mensaje: "Error al eliminar usuario", error: error.message });
+  }
 };

@@ -33,7 +33,7 @@ const DetalleDestinoCard = ({ destino }) => {
                 <div className="destino-gallery">
                     <div className="main-image">
                         <img
-                            src={`/img/${destino.imagen}`}
+                            src={destino.imagen.startsWith('http') ? destino.imagen : `/img/${destino.imagen}`}
                             alt={destino.nombre}
                             className="img-principal"
                             loading="eager"
@@ -43,7 +43,7 @@ const DetalleDestinoCard = ({ destino }) => {
                         {[1, 2, 3, 4].map((item) => (
                             <div key={item} className="thumbnail">
                                 <img
-                                    src={`/img/${destino.imagen}`}
+                                    src={destino.imagen.startsWith('http') ? destino.imagen : `/img/${destino.imagen}`}
                                     alt={`Vista ${item} de ${destino.nombre}`}
                                     className="img-thumb"
                                 />
